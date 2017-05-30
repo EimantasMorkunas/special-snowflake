@@ -155,8 +155,11 @@ union YYSTYPE
     Parameter* param;
     TypeName* typeName;
     string* s;
+	Loop* loop;
+	Range* range;
+	VarOrInteger* varOrInteger;
 
-#line 160 "snowflake.tab.cpp" /* yacc.c:355  */
+#line 163 "snowflake.tab.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -173,7 +176,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 177 "snowflake.tab.cpp" /* yacc.c:358  */
+#line 180 "snowflake.tab.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -473,15 +476,15 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    73,    73,    74,    76,    77,    80,    81,    84,    85,
-      86,    87,    90,    91,    92,    93,    96,    97,   100,   101,
-     104,   105,   106,   109,   110,   111,   112,   113,   114,   117,
-     118,   119,   122,   123,   126,   127,   130,   131,   134,   135,
-     138,   141,   142,   145,   146,   149,   152,   153,   156,   157,
-     158,   159,   160,   161,   164,   165,   168,   169,   170,   171,
-     174,   175,   178,   179,   182,   185,   186,   189,   190,   193,
-     194,   197,   200,   201,   204,   205,   208,   209,   212,   213,
-     214,   215
+       0,    79,    79,    80,    82,    83,    86,    87,    90,    91,
+      92,    93,    96,    97,    98,    99,   102,   103,   106,   107,
+     110,   111,   112,   115,   116,   117,   118,   119,   120,   123,
+     124,   125,   128,   129,   132,   133,   136,   137,   140,   141,
+     144,   147,   148,   151,   152,   155,   158,   159,   162,   163,
+     164,   165,   166,   167,   170,   171,   174,   175,   176,   177,
+     180,   181,   184,   185,   188,   191,   192,   195,   196,   199,
+     200,   203,   206,   207,   210,   211,   214,   215,   218,   219,
+     220,   221
 };
 #endif
 
@@ -1350,481 +1353,481 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 73 "snowflake.ypp" /* yacc.c:1646  */
-    {cout << "code" << endl; (yyval.code) = new Code(); (yyval.code)->FunctionList.push_back((yyvsp[0].function)); cout << (yyval.code)->codeGen() << endl;}
-#line 1356 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 79 "snowflake.ypp" /* yacc.c:1646  */
+    {cout << "code" << endl; (yyval.code) = new Code(); (yyval.code)->FunctionList.push_back((yyvsp[0].function)); cout << (yyval.code)->genCode() << endl;}
+#line 1359 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 74 "snowflake.ypp" /* yacc.c:1646  */
+#line 80 "snowflake.ypp" /* yacc.c:1646  */
     {printf("func code\n"); (yyvsp[-1].code)->FunctionList.push_back((yyvsp[0].function));}
-#line 1362 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1365 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 76 "snowflake.ypp" /* yacc.c:1646  */
+#line 82 "snowflake.ypp" /* yacc.c:1646  */
     {printf("statement\n"); (yyval.block) = new Block(); (yyval.block)->StatementList.push_back((yyvsp[0].statement));}
-#line 1368 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1371 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 77 "snowflake.ypp" /* yacc.c:1646  */
+#line 83 "snowflake.ypp" /* yacc.c:1646  */
     {printf("statement statements\n"); (yyvsp[-1].block)->StatementList.push_back((yyvsp[0].statement));}
-#line 1374 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1377 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 80 "snowflake.ypp" /* yacc.c:1646  */
+#line 86 "snowflake.ypp" /* yacc.c:1646  */
     {printf("block statements\n"); (yyval.block) = (yyvsp[0].block);}
-#line 1380 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1383 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 81 "snowflake.ypp" /* yacc.c:1646  */
+#line 87 "snowflake.ypp" /* yacc.c:1646  */
     {(yyval.block) = new Block();}
-#line 1386 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1389 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 84 "snowflake.ypp" /* yacc.c:1646  */
+#line 90 "snowflake.ypp" /* yacc.c:1646  */
     {printf("assignment\n");}
-#line 1392 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1395 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 85 "snowflake.ypp" /* yacc.c:1646  */
+#line 91 "snowflake.ypp" /* yacc.c:1646  */
     {printf("logical\n");}
-#line 1398 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1401 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 86 "snowflake.ypp" /* yacc.c:1646  */
+#line 92 "snowflake.ypp" /* yacc.c:1646  */
     {printf("loop\n");}
-#line 1404 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1407 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 87 "snowflake.ypp" /* yacc.c:1646  */
+#line 93 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1410 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1413 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 90 "snowflake.ypp" /* yacc.c:1646  */
+#line 96 "snowflake.ypp" /* yacc.c:1646  */
     {printf("simple assignment\n"); (yyval.assignment) = new AssignmentBasic((yyvsp[-2].variable), (yyvsp[0].expression));}
-#line 1416 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1419 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 91 "snowflake.ypp" /* yacc.c:1646  */
+#line 97 "snowflake.ypp" /* yacc.c:1646  */
     {printf("multiple assignemnts\n");}
-#line 1422 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1425 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 92 "snowflake.ypp" /* yacc.c:1646  */
+#line 98 "snowflake.ypp" /* yacc.c:1646  */
     {printf("array element assignement\n");}
-#line 1428 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1431 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 93 "snowflake.ypp" /* yacc.c:1646  */
+#line 99 "snowflake.ypp" /* yacc.c:1646  */
     {printf("array assignement\n");}
-#line 1434 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1437 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 96 "snowflake.ypp" /* yacc.c:1646  */
+#line 102 "snowflake.ypp" /* yacc.c:1646  */
     {printf("array with special init\n");}
-#line 1440 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1443 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 97 "snowflake.ypp" /* yacc.c:1646  */
+#line 103 "snowflake.ypp" /* yacc.c:1646  */
     {printf("array with standard init\n");}
-#line 1446 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1449 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 100 "snowflake.ypp" /* yacc.c:1646  */
+#line 106 "snowflake.ypp" /* yacc.c:1646  */
     {printf("array init exp w/ default\n");}
-#line 1452 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1455 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 101 "snowflake.ypp" /* yacc.c:1646  */
+#line 107 "snowflake.ypp" /* yacc.c:1646  */
     {printf("array init exp\n");}
-#line 1458 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1461 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 104 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("exp with ident\n");}
-#line 1464 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 110 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("exp with ident\n"); (yyval.expression) = new ExpressionBasic((yyvsp[0].identifier));}
+#line 1467 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 105 "snowflake.ypp" /* yacc.c:1646  */
+#line 111 "snowflake.ypp" /* yacc.c:1646  */
     {printf("exp with op and exp\n");}
-#line 1470 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1473 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 106 "snowflake.ypp" /* yacc.c:1646  */
+#line 112 "snowflake.ypp" /* yacc.c:1646  */
     {printf("exp with op and (exp)\n");}
-#line 1476 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1479 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 109 "snowflake.ypp" /* yacc.c:1646  */
+#line 115 "snowflake.ypp" /* yacc.c:1646  */
     {printf("+\n");}
-#line 1482 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1485 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 110 "snowflake.ypp" /* yacc.c:1646  */
+#line 116 "snowflake.ypp" /* yacc.c:1646  */
     {printf("-\n");}
-#line 1488 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1491 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 111 "snowflake.ypp" /* yacc.c:1646  */
+#line 117 "snowflake.ypp" /* yacc.c:1646  */
     {printf("*\n");}
-#line 1494 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1497 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 112 "snowflake.ypp" /* yacc.c:1646  */
+#line 118 "snowflake.ypp" /* yacc.c:1646  */
     {printf("/\n");}
-#line 1500 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1503 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 113 "snowflake.ypp" /* yacc.c:1646  */
+#line 119 "snowflake.ypp" /* yacc.c:1646  */
     {printf("^\n");}
-#line 1506 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1509 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 114 "snowflake.ypp" /* yacc.c:1646  */
+#line 120 "snowflake.ypp" /* yacc.c:1646  */
     {printf("%\n");}
-#line 1512 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1515 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 117 "snowflake.ypp" /* yacc.c:1646  */
+#line 123 "snowflake.ypp" /* yacc.c:1646  */
     {printf("if with else\n");}
-#line 1518 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1521 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 118 "snowflake.ypp" /* yacc.c:1646  */
+#line 124 "snowflake.ypp" /* yacc.c:1646  */
     {printf("if with else if\n");}
-#line 1524 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1527 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 119 "snowflake.ypp" /* yacc.c:1646  */
+#line 125 "snowflake.ypp" /* yacc.c:1646  */
     {printf("if no else\n");}
-#line 1530 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1533 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 122 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("loop with range\n");}
-#line 1536 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 128 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("loop with range\n"); (yyval.loop) = new LoopFor((yyvsp[-5].variable), (yyvsp[-3].range), (yyvsp[-1].block));}
+#line 1539 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 123 "snowflake.ypp" /* yacc.c:1646  */
+#line 129 "snowflake.ypp" /* yacc.c:1646  */
     {printf("loop with cond\n");}
-#line 1542 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1545 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 126 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("range from to\n");}
-#line 1548 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 132 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("range from to\n"); (yyval.range) = new Range((yyvsp[-2].varOrInteger), (yyvsp[0].varOrInteger));}
+#line 1551 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 127 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("range to\n");}
-#line 1554 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 133 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("range to\n"); (yyval.range) = new Range(nullptr, (yyvsp[0].varOrInteger));}
+#line 1557 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 130 "snowflake.ypp" /* yacc.c:1646  */
+#line 136 "snowflake.ypp" /* yacc.c:1646  */
     {printf("joint eval\n");}
-#line 1560 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1563 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 131 "snowflake.ypp" /* yacc.c:1646  */
+#line 137 "snowflake.ypp" /* yacc.c:1646  */
     {printf("simple eval\n");}
-#line 1566 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1569 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 134 "snowflake.ypp" /* yacc.c:1646  */
+#line 140 "snowflake.ypp" /* yacc.c:1646  */
     {printf("evalGroupI in boolean exp\n");}
-#line 1572 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1575 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 135 "snowflake.ypp" /* yacc.c:1646  */
+#line 141 "snowflake.ypp" /* yacc.c:1646  */
     {printf("BOOLEAN in bool exp\n");}
-#line 1578 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1581 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 138 "snowflake.ypp" /* yacc.c:1646  */
+#line 144 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1584 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1587 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 141 "snowflake.ypp" /* yacc.c:1646  */
+#line 147 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1590 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1593 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 142 "snowflake.ypp" /* yacc.c:1646  */
+#line 148 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1596 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1599 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 145 "snowflake.ypp" /* yacc.c:1646  */
+#line 151 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1602 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1605 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 146 "snowflake.ypp" /* yacc.c:1646  */
+#line 152 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1608 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1611 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 149 "snowflake.ypp" /* yacc.c:1646  */
+#line 155 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1614 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1617 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 152 "snowflake.ypp" /* yacc.c:1646  */
+#line 158 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1620 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1623 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 153 "snowflake.ypp" /* yacc.c:1646  */
+#line 159 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1626 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1629 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 156 "snowflake.ypp" /* yacc.c:1646  */
+#line 162 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1632 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1635 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 157 "snowflake.ypp" /* yacc.c:1646  */
+#line 163 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1638 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1641 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 158 "snowflake.ypp" /* yacc.c:1646  */
+#line 164 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1644 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1647 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 159 "snowflake.ypp" /* yacc.c:1646  */
+#line 165 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1650 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1653 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 160 "snowflake.ypp" /* yacc.c:1646  */
+#line 166 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1656 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1659 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 161 "snowflake.ypp" /* yacc.c:1646  */
+#line 167 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1662 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1665 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 164 "snowflake.ypp" /* yacc.c:1646  */
+#line 170 "snowflake.ypp" /* yacc.c:1646  */
     {printf("int in number\n");}
-#line 1668 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1671 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 165 "snowflake.ypp" /* yacc.c:1646  */
+#line 171 "snowflake.ypp" /* yacc.c:1646  */
     {printf("float in number\n");}
-#line 1674 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1677 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 168 "snowflake.ypp" /* yacc.c:1646  */
+#line 174 "snowflake.ypp" /* yacc.c:1646  */
     {printf("var ident\n");}
-#line 1680 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1683 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 169 "snowflake.ypp" /* yacc.c:1646  */
+#line 175 "snowflake.ypp" /* yacc.c:1646  */
     {printf("number ident\n");}
-#line 1686 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1689 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 170 "snowflake.ypp" /* yacc.c:1646  */
+#line 176 "snowflake.ypp" /* yacc.c:1646  */
     {printf("char ident\n");}
-#line 1692 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1695 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 171 "snowflake.ypp" /* yacc.c:1646  */
+#line 177 "snowflake.ypp" /* yacc.c:1646  */
     {printf("string ident\n");}
-#line 1698 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1701 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 174 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1704 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 180 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcCall\n"); (yyval.varOrInteger) = new VarOrInteger((yyvsp[0].variable), nullptr);}
+#line 1707 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 175 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1710 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 181 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcCall\n"); (yyval.varOrInteger) = new VarOrInteger(nullptr, (yyvsp[0].integer));}
+#line 1713 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 178 "snowflake.ypp" /* yacc.c:1646  */
+#line 184 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1716 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1719 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 179 "snowflake.ypp" /* yacc.c:1646  */
+#line 185 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1722 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1725 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 182 "snowflake.ypp" /* yacc.c:1646  */
+#line 188 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n"); (yyval.function) = new Function((yyvsp[-6].variable), (yyvsp[-4].params), (yyvsp[-1].block));}
-#line 1728 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1731 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 185 "snowflake.ypp" /* yacc.c:1646  */
+#line 191 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n"); (yyval.params) = new Parameters(); (yyval.params)->ParameterList.push_back((yyvsp[0].param));}
-#line 1734 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1737 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 186 "snowflake.ypp" /* yacc.c:1646  */
+#line 192 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n"); (yyvsp[-2].params)->ParameterList.push_back((yyvsp[0].param));}
-#line 1740 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1743 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 189 "snowflake.ypp" /* yacc.c:1646  */
+#line 195 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n"); (yyval.params) = (yyvsp[0].params);}
-#line 1746 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1749 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 190 "snowflake.ypp" /* yacc.c:1646  */
+#line 196 "snowflake.ypp" /* yacc.c:1646  */
     {(yyval.params) = new Parameters();}
-#line 1752 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1755 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 193 "snowflake.ypp" /* yacc.c:1646  */
+#line 199 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n"); (yyval.param) = new Parameter((yyvsp[0].variable), (yyvsp[-1].typeName), false);}
-#line 1758 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1761 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 194 "snowflake.ypp" /* yacc.c:1646  */
+#line 200 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n"); (yyval.param) = new Parameter((yyvsp[0].variable), (yyvsp[-2].typeName), true);}
-#line 1764 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1767 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 197 "snowflake.ypp" /* yacc.c:1646  */
+#line 203 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1770 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1773 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 200 "snowflake.ypp" /* yacc.c:1646  */
+#line 206 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1776 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1779 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 201 "snowflake.ypp" /* yacc.c:1646  */
+#line 207 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1782 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1785 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 204 "snowflake.ypp" /* yacc.c:1646  */
+#line 210 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1788 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1791 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 208 "snowflake.ypp" /* yacc.c:1646  */
+#line 214 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1794 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1797 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 209 "snowflake.ypp" /* yacc.c:1646  */
+#line 215 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall\n");}
-#line 1800 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1803 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 212 "snowflake.ypp" /* yacc.c:1646  */
+#line 218 "snowflake.ypp" /* yacc.c:1646  */
     {(yyval.typeName) = new TypeName((yyvsp[0].s));}
-#line 1806 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1809 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 213 "snowflake.ypp" /* yacc.c:1646  */
+#line 219 "snowflake.ypp" /* yacc.c:1646  */
     {(yyval.typeName) = new TypeName((yyvsp[0].s));}
-#line 1812 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1815 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 214 "snowflake.ypp" /* yacc.c:1646  */
+#line 220 "snowflake.ypp" /* yacc.c:1646  */
     {(yyval.typeName) = new TypeName((yyvsp[0].s));}
-#line 1818 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1821 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 215 "snowflake.ypp" /* yacc.c:1646  */
+#line 221 "snowflake.ypp" /* yacc.c:1646  */
     {(yyval.typeName) = new TypeName((yyvsp[0].s));}
-#line 1824 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1827 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1828 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1831 "snowflake.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2052,7 +2055,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 218 "snowflake.ypp" /* yacc.c:1906  */
+#line 224 "snowflake.ypp" /* yacc.c:1906  */
 
 
 void yyerror (char *s) {printf ("%s\n", s);}

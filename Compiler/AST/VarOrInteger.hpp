@@ -1,6 +1,6 @@
 #pragma once
-
 #include <iostream>
+#include "CodeGenContext.hpp"
 
 using namespace std;
 
@@ -15,8 +15,8 @@ public:
     }
     virtual ~VarOrInteger() { delete variable; delete integer; }
 
-    virtual string genCode() {
-        return variable == nullptr ? integer->genCode() :
-            variable->genCode();
+    virtual string genCode(CodeGenContext* context) {
+        return variable == nullptr ? integer->genCode(context) :
+            variable->genCode(context);
     }
 };

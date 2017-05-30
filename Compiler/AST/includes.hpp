@@ -1,3 +1,4 @@
+#pragma once
 #include "Node.hpp"
 #include "Statement.hpp"
 #include "Assignment.hpp"
@@ -12,3 +13,4 @@
 #include "Loop.hpp"
 #include "LoopFor.hpp"
 #include "Range.hpp"
+#include "ExpressionBasic.hpp"

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-
+#include "CodeGenContext.hpp"
 #include "VarOrInteger.hpp"
 
 using namespace std;
@@ -18,9 +18,9 @@ public:
     }
     virtual ~Range() { delete varOrIntegerFrom; delete varOrIntegerTo; }
     
-    virtual string genCode(string name) {
-        return varOrIntegerFrom != nullptr ? varOrIntegerFrom->genCode() + 
-             "; " + name + " <= " + varOrIntegerTo->genCode() + "; " + "++" + name :
-             "0; " + name + " < " + varOrIntegerTo->genCode() + "; " + "++" + name;
+    virtual string genCode(CodeGenContext* context, string name) {
+        return varOrIntegerFrom != nullptr ? varOrIntegerFrom->genCode(context) + 
+             "; " + name + " <= " + varOrIntegerTo->genCode(context) + "; " + "++" + name :
+             "0; " + name + " < " + varOrIntegerTo->genCode(context) + "; " + "++" + name;
     }
 };

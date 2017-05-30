@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "CodeGenContext.hpp"
 
 using namespace std;
 
@@ -8,5 +9,5 @@ public:
     LoopWhile() {}
     virtual ~LoopWhile() {}
 
-    virtual string genCode() { return ""; }
+    virtual string genCode(CodeGenContext* context) { return ""; }
 };

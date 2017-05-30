@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "CodeGenContext.hpp"
 #include "Node.hpp"
 #include "TypeName.hpp"
 
@@ -16,11 +17,11 @@ public:
 		this->isOut = isOut;
 	}
     virtual ~Parameter() {}
-    virtual string genCode() {
-		string result = type->genCode() + " ";
+    virtual string genCode(CodeGenContext* context) {
+		string result = type->genCode(context) + " ";
 		if (isOut) {
 			result += "&";
 		}
-		return result + name->genCode();
+		return result + name->genCode(context);
 	}
 };

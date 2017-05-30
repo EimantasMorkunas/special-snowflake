@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-
+#include "CodeGenContext.hpp"
 #include "Variable.hpp"
 #include "Range.hpp"
 #include "Block.hpp"
@@ -21,9 +21,9 @@ public:
     }
     virtual ~LoopFor() { delete var; delete range; delete block; }
     
-    virtual string genCode() {
-        string name = var->genCode();
-        return "for (int " + name + " = " + range->genCode(name) + ")" +
-            "{" + block->genCode() + "}";
+    virtual string genCode(CodeGenContext* context) {
+        string name = var->genCode(context);
+        return "for (int " + name + " = " + range->genCode(context, name) + ")" +
+            "{" + block->genCode(context) + "}";
     }
 };

@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <vector>
-
+#include "CodeGenContext.hpp"
 #include "Node.hpp"
 #include "Statement.hpp"
 
@@ -13,10 +13,10 @@ public:
 	vector<Statement*> StatementList;
 	Block() {}
     virtual ~Block() {}
-    virtual string genCode() {
+    virtual string genCode(CodeGenContext* context) {
 		string result = "";
 		for(std::vector<Statement*>::iterator it = StatementList.begin(); it != StatementList.end(); ++it) {
-			result += (*it)->genCode() + ";";
+			result += (*it)->genCode(context) + ";";
 		}
 		return result;
 	}

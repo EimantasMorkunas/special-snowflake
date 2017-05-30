@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "CodeGenContext.hpp"
 
 using namespace std;
 
@@ -10,5 +11,5 @@ public:
         this->name = name;
 	}
     virtual ~TypeName() {}
-    virtual string genCode() { return *name; }
+    virtual string genCode(CodeGenContext* context) { return *name; }
 };

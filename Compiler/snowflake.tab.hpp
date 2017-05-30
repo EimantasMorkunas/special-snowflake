@@ -94,8 +94,11 @@ union YYSTYPE
     Parameter* param;
     TypeName* typeName;
     string* s;
+	Loop* loop;
+	Range* range;
+	VarOrInteger* varOrInteger;
 
-#line 99 "snowflake.tab.hpp" /* yacc.c:1909  */
+#line 102 "snowflake.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

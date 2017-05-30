@@ -16,5 +16,5 @@ public:
 		this->params = params;
 	}
     virtual ~Function() {}
-    virtual string genCode() { return "int " + name->genCode() + "(" + params->genCode() + "){" + block->genCode() + "}"; }
+    virtual string genCode(CodeGenContext* context) { return "int " + name->genCode(context) + "(" + params->genCode(context) + "){" + block->genCode(context) + "}"; }
 };

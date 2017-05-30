@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "CodeGenContext.hpp"
 #include "Identifier.hpp"
 
 using namespace std;
@@ -11,5 +12,6 @@ public:
 		this->value = atoi(value);
 	}
     virtual ~Integer() {}
-    virtual string genCode() { return to_string(value); }
+	virtual string getType() {return "INTEGER"; }
+    virtual string genCode(CodeGenContext* context) { return to_string(value); }
 };

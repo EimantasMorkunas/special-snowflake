@@ -1,11 +1,13 @@
 #pragma once
 #include <iostream>
-#include "Expression.hpp"
+#include "CodeGenContext.hpp"
+#include "Node.hpp"
 
 using namespace std;
 
-class Identifier : public Expression {
+class Identifier : public Node {
 public:
     virtual ~Identifier() {}
-    virtual string genCode() { return "Shit works, gg"; }
+    virtual string getType() = 0;
+    virtual string genCode(CodeGenContext* context) = 0;
 };

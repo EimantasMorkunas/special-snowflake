@@ -107,7 +107,7 @@ arrayExp        : varOrInteger ',' identifier               {printf("array init 
                 | varOrInteger                              {printf("array init exp\n");}
                 ;
 
-exp             : identifier                                {printf("exp with ident\n");}
+exp             : identifier                                {printf("exp with ident\n"); $$ = new ExpressionBasic($1);}
                 | identifier operator exp                   {printf("exp with op and exp\n");}
                 | identifier operator '(' exp ')'           {printf("exp with op and (exp)\n");}
                 ;
@@ -224,4 +224,3 @@ typeName        : INT_NAME                                  {$$ = new TypeName($
 %%
 
 void yyerror (char *s) {printf ("%s\n", s);}
-
