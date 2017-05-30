@@ -7,3 +7,5 @@
 #include "Variable.hpp"
 #include "Integer.hpp"
 #include "Block.hpp"
+#include "Function.hpp"
+#include "Code.hpp"

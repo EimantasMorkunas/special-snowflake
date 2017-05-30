@@ -64,7 +64,11 @@ extern int yydebug;
     RNG = 274,
     NOT_INIT = 275,
     BOOLEAN = 276,
-    ARRAY_INIT = 277
+    ARRAY_INIT = 277,
+    INT_NAME = 278,
+    FLOAT_NAME = 279,
+    CHAR_NAME = 280,
+    STRING_NAME = 281
   };
 #endif
 
@@ -76,6 +80,8 @@ union YYSTYPE
 #line 11 "snowflake.ypp" /* yacc.c:1909  */
  
     Node* node;
+    Code* code;
+    Function * function;
     Block* block;
     Statement* statement;
     Expression* expression;
@@ -84,9 +90,12 @@ union YYSTYPE
     Identifier* identifier;
     Variable* variable;
     Integer* integer;
+    Parameters* params;
+    Parameter* param;
+    TypeName* typeName;
     string* s;
 
-#line 90 "snowflake.tab.hpp" /* yacc.c:1909  */
+#line 99 "snowflake.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

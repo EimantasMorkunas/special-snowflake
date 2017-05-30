@@ -11,6 +11,10 @@ else                    {return ELSE;}
 loop                    {return LOOP;}
 func                    {return FUNC;}
 out                     {return OUT;}
+int						{yylval.s = new string(yytext);return INT_NAME;}
+float					{yylval.s = new string(yytext);return FLOAT_NAME;}
+char					{yylval.s = new string(yytext);return CHAR_NAME;}
+string					{yylval.s = new string(yytext);return STRING_NAME;}
 [<>=+\-*/^\]\[,{}():]   {return yytext[0];}
 !=                      {return NOT_EQ;}
 ==                      {return EQ;}
