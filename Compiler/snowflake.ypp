@@ -1,0 +1,201 @@
+%{
+    #include <stdio.h>
+    #include <iostream>
+    #include "AST/includes.hpp"
+    void yyerror (char *s);
+    int yylex();
+    using namespace std;
+%}
+
+%union
+{ 
+    Node* node;
+    Block* block;
+    Statement* statement;
+    Expression* expression;
+    Assignment* assignment;
+    AssignmentBasic* assignmentBasic;
+    Identifier* identifier;
+    Variable* variable;
+    Integer* integer;
+    string* s;
+} 
+
+%start code
+%token <node> IF
+%token <node> ELSE
+%token <node> LOOP
+%token FUNC
+%token OUT
+%token <variable> VAR
+%token <integer> INTEGER
+%token <s> FLOAT
+%token <s> CHAR
+%token <s> STRING
+%token EQ
+%token NOT_EQ
+%token LTE
+%token GTE
+%token AND
+%token OR
+%token RNG
+%token NOT_INIT
+%token BOOLEAN
+%token ARRAY_INIT
+
+%type <node> code
+%type <block> block statements
+%type <statement> statement
+%type <expression> exp
+%type <assignment> assignment
+%type <identifier> identifier
+
+
+%left '+' '-'
+%left '*' '/' '%'
+%left '^'
+
+%%
+
+code            : func                                      {cout << "code" << endl;}
+                | func code                                 {printf("func code\n");}
+
+statements      : statement                                 {printf("statement\n"); $$ = new Block(); $$->StatementList.push_back($1);}
+                | statements statement                      {printf("statement statements\n"); $1->StatementList.push_back($2);}
+                ;
+                
+block           : statements                                {printf("block statements\n"); $$ = $1; cout << $$->codeGen() << endl;}
+                |                                           {$$ = new Block();}
+                ;
+                
+statement       : assignment                                {printf("assignment\n");}
+                | logical                                   {printf("logical\n");}
+                | loop                                      {printf("loop\n");}
+                | funcCall                                  {printf("funcCall\n");}
+                ;
+                
+assignment      : VAR '=' exp                               {printf("simple assignment\n"); $$ = new AssignmentBasic($1, $3); cout << $$->codeGen() << endl;}
+                | VAR '=' exp ',' assignment                {printf("multiple assignemnts\n");}
+                | VAR '[' varOrInteger ']' '=' exp          {printf("array element assignement\n");}
+                | VAR '=' array                             {printf("array assignement\n");}
+                ;
+
+array           : ARRAY_INIT arrayExp ']'                   {printf("array with special init\n");}
+                | '[' identifiers ']'                       {printf("array with standard init\n");}
+                ;
+
+arrayExp        : varOrInteger ',' identifier               {printf("array init exp w/ default\n");}
+                | varOrInteger                              {printf("array init exp\n");}
+                ;
+
+exp             : identifier                                {printf("exp with ident\n");}
+                | identifier operator exp                   {printf("exp with op and exp\n");}
+                | identifier operator '(' exp ')'           {printf("exp with op and (exp)\n");}
+                ;
+
+operator        : '+'                                       {printf("+\n");}
+                | '-'                                       {printf("-\n");}
+                | '*'                                       {printf("*\n");}
+                | '/'                                       {printf("/\n");}
+                | '^'                                       {printf("^\n");}
+                | '%'                                       {printf("%\n");}
+                ;
+
+logical         : IF eval '{' block '}' ELSE '{' block '}'  {printf("if with else\n");}
+                | IF eval '{' block '}' ELSE logical        {printf("if with else if\n");}
+                | IF eval '{' block '}'                     {printf("if no else\n");}
+                ;
+
+loop            : LOOP VAR ':' range '{' block '}'          {printf("loop with range\n");}
+                | LOOP eval '{' block '}'                   {printf("loop with cond\n");}
+                ;
+
+range           : varOrInteger RNG varOrInteger             {printf("range from to\n");}
+                | varOrInteger                              {printf("range to\n");}
+                ;
+
+eval            : bool logicalOperator eval                 {printf("joint eval\n");}
+                | bool                                      {printf("simple eval\n");}
+                ;
+
+booleanExp      : evalGroupI                                {printf("evalGroupI in boolean exp\n");}
+                | BOOLEAN                                   {printf("BOOLEAN in bool exp\n");}
+                ;
+
+evalGroupI      : evalGroup                                 {printf("funcCall\n");}
+                ;
+
+logicalOperator : AND                                       {printf("funcCall\n");}
+                | OR                                        {printf("funcCall\n");}
+                ;
+
+identifiers     : identifier                                {printf("funcCall\n");}
+                | identifier ',' identifiers                {printf("funcCall\n");}
+                ;
+
+evalGroup       : identifiers comp evalGroupSub             {printf("funcCall\n");}
+                ;
+                
+evalGroupSub    : identifiers comp evalGroupSub             {printf("funcCall\n");}
+                | identifiers                               {printf("funcCall\n");}
+                ;
+
+comp            : '<'                                       {printf("funcCall\n");}
+                | '>'                                       {printf("funcCall\n");}
+                | LTE                                       {printf("funcCall\n");}
+                | GTE                                       {printf("funcCall\n");}
+                | EQ                                        {printf("funcCall\n");}
+                | NOT_EQ                                    {printf("funcCall\n");}
+                ;
+
+number          : INTEGER                                   {printf("int in number\n");}
+                | FLOAT                                     {printf("float in number\n");}
+                ;
+
+identifier      : VAR                                       {printf("var ident\n");}
+                | number                                    {printf("number ident\n");}
+                | CHAR                                      {printf("char ident\n");}
+                | STRING                                    {printf("string ident\n");}
+                ;
+
+varOrInteger    : VAR                                       {printf("funcCall\n");}
+                | INTEGER                                   {printf("funcCall\n");}
+                ;
+
+bool            : booleanExp                                {printf("funcCall\n");}
+                | NOT_INIT booleanExp ')'                   {printf("funcCall\n");}
+                ;
+
+func            : FUNC VAR '(' funcParams ')' '{' block '}' {printf("funcCall\n");}
+                ;
+                
+funcParamsSub   : funcParam                                 {printf("funcCall\n");}
+                | funcParam ',' funcParamsSub               {printf("funcCall\n");}
+                ;
+                
+funcParams      : funcParamsSub                             {printf("funcCall\n");}
+                |
+                ;
+                
+funcParam       : VAR                                       {printf("funcCall\n");}
+                | OUT VAR                                   {printf("funcCall\n");}
+                ;
+                
+funcCall        : VAR '(' funcCallParams ')'                {printf("funcCall\n");}
+                ;
+                
+funcCallParamsSub : funcCallParam                           {printf("funcCall\n");}
+                  | funcCallParam ',' funcCallParamsSub     {printf("funcCall\n");}
+                  ;
+                    
+funcCallParams  : funcCallParamsSub                         {printf("funcCall\n");}
+                |
+                ;                 
+
+funcCallParam   : identifier                                {printf("funcCall\n");}
+                | OUT identifier                            {printf("funcCall\n");}
+                ;    
+
+%%
+
+void yyerror (char *s) {printf ("%s\n", s);}

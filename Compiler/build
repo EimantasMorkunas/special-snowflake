@@ -1,0 +1,4 @@
+#!/bin/sh
+bison -d snowflake.ypp
+flex snowflake.lpp
+g++ -std=gnu++11 -Wall -Wextra lex.yy.c snowflake.tab.cpp main.cpp -o test

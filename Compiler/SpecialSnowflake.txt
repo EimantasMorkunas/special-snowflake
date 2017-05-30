@@ -1,0 +1,61 @@
+// Special snowflake, .spclsnwflk
+// Flex + Bison
+
+func main() {
+    // init reiksmes
+    a = 8, b = 4
+    c = 6
+    d = 7
+    e1 = 7f
+    e2 = 7.0
+    e3 = 7.0f
+    
+    string = "eilute"
+    
+    char = 'a'
+    
+    // mas0 = [1, 2, 4, 6]
+    
+    // Statinis 5 ilgio masyvas su -1 defaultinem reiksmem
+    mas1 = .[5, -1]
+    // statinis 5 ilgio masyvas su 0 defaultinem reikmsem
+    mas2 = .[5]
+    
+    mas0[4] = 4
+	
+    if a, d > b, c {
+    	d = d + 1
+    }
+	
+	if a < b < c {
+		
+	}
+    
+    loop i: 2..4 { // negrieztas, 1 2 3 4
+    	d = d + i
+    }
+    
+    loop i: 4 { // grieztas, 0 1 2 3
+    	
+    }
+    
+    loop !(a > c) {
+        d = d - 1
+    }
+    
+    if a, c == b, d < e, f > g, h, f {
+        f = f - 1
+    }
+	
+	name1("", out param) // nereikia nurodyti param atskirai, sukuriamas funkcijos kvietime
+	param = param + 1
+	
+}
+
+func name1(param1, out param2) {
+    param2 = 5
+}
+
+func name2() {
+
+}

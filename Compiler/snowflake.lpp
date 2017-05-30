@@ -1,0 +1,61 @@
+%{
+#include "AST/includes.hpp"
+using namespace std;
+#include "snowflake.tab.hpp"
+#include <stdio.h>
+%}
+
+%%
+if                      {return IF;}
+else                    {return ELSE;}
+loop                    {return LOOP;}
+func                    {return FUNC;}
+out                     {return OUT;}
+[<>=+\-*/^\]\[,{}():]   {return yytext[0];}
+!=                      {return NOT_EQ;}
+==                      {return EQ;}
+\<=                     {return LTE;}
+>=                      {return GTE;}
+&&                      {return AND;}
+\|\|                    {return OR;}
+!\(                     {return NOT_INIT;}
+\.\[                    {return ARRAY_INIT;}
+(true)|(false)        	{return BOOLEAN;}
+[a-zA-Z_][a-zA-Z0-9_]*  {yylval.variable = new Variable(yytext); return VAR;}
+-*[0-9]+                {yylval.integer = new Integer(yytext); return INTEGER;}
+-*[0-9]+.[0-9]+         {return FLOAT;}
+-*[0-9]+(.[0-9])*f      {return FLOAT;}
+\".*\"                  {yylval.s = new string(yytext); return STRING;}
+'.'                     {return CHAR;}
+\.\.                    {return RNG;}
+\/\/.*                  {}
+[ \t\n\r]               {}
+
+%%
+int yywrap (void) { return 1; }
+
+/*
+if                      {return IF;}
+else                    {return ELSE;}
+loop                    {return LOOP;}
+func                    {printf("func\n");return FUNC;}
+out                     {return OUT;}
+!=                      {return NOT_EQ;}
+==                      {printf("eq\n");return EQ;}
+\<=                     {return LTE;}
+>=                      {return GTE;}
+&&                      {return AND;}
+\|\|                    {return OR;}
+!\(                     {return NOT_INIT;}
+\.\[                    {printf("init\n");return ARRAY_INIT;}
+(true)|(false)        	{return BOOLEAN;}
+[a-zA-Z_][a-zA-Z0-9_]*  {printf("var\n");return VAR;}
+-*[0-9]+                {printf("int\n");return INTEGER;}
+-*[0-9]+.[0-9]+         {return FLOAT;}
+-*[0-9]+(.[0-9])*f      {return FLOAT;}
+\".*\"                  {return STRING;}
+'.'                     {return CHAR;}
+\.\.                    {return RNG;}
+\/\/.*                  {}
+[ \t\n\r]               {}
+*/
