@@ -9,3 +9,6 @@
 #include "Block.hpp"
 #include "Function.hpp"
 #include "Code.hpp"
+#include "Loop.hpp"
+#include "LoopFor.hpp"
+#include "Range.hpp"

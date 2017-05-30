@@ -7,5 +7,5 @@ using namespace std;
 class Identifier : public Expression {
 public:
     virtual ~Identifier() {}
-    virtual string codeGen() { return "Shit works, gg"; }
+    virtual string genCode() { return "Shit works, gg"; }
 };

@@ -6,5 +6,5 @@ using namespace std;
 class Statement : public Node {
 public:
     virtual ~Statement() {}
-    virtual string codeGen() { return ""; }
+    virtual string genCode() { return ""; }
 };

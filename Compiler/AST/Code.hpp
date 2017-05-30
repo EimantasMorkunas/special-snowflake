@@ -10,10 +10,10 @@ class Code : public Node {
 public:
 	vector<Function*> FunctionList;
     virtual ~Code() {}
-    virtual string codeGen() {
+    virtual string genCode() {
 		string result = "";
 		for(std::vector<Function*>::iterator it = FunctionList.begin(); it != FunctionList.end(); ++it) {
-			result += (*it)->codeGen();
+			result += (*it)->genCode();
 		}
 		return result;
 	}

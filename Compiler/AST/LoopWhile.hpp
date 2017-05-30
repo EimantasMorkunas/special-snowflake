@@ -3,8 +3,10 @@
 
 using namespace std;
 
-class Expression : public Node {
+class LoopWhile : public Loop {
 public:
-    virtual ~Expression() {}
+    LoopWhile() {}
+    virtual ~LoopWhile() {}
+
     virtual string genCode() { return ""; }
 };

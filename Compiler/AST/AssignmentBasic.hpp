@@ -12,5 +12,5 @@ public:
 	}
 	Expression* exp;
     virtual ~AssignmentBasic() {}
-    virtual string codeGen() { return variable->codeGen() + " = " + exp->codeGen(); }
+    virtual string genCode() { return variable->genCode() + " = " + exp->genCode(); }
 };

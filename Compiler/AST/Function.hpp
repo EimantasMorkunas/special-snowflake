@@ -16,5 +16,5 @@ public:
 		this->params = params;
 	}
     virtual ~Function() {}
-    virtual string codeGen() { return "int " + name->codeGen() + "(" + params->codeGen() + "){" + block->codeGen() + "}"; }
+    virtual string genCode() { return "int " + name->genCode() + "(" + params->genCode() + "){" + block->genCode() + "}"; }
 };

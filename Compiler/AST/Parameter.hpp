@@ -16,11 +16,11 @@ public:
 		this->isOut = isOut;
 	}
     virtual ~Parameter() {}
-    virtual string codeGen() {
-		string result = type->codeGen() + " ";
+    virtual string genCode() {
+		string result = type->genCode() + " ";
 		if (isOut) {
 			result += "&";
 		}
-		return result + name->codeGen();
+		return result + name->genCode();
 	}
 };

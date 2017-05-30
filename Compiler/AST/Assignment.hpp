@@ -8,5 +8,5 @@ class Assignment : public Statement {
 public:
 	Variable* variable;
     virtual ~Assignment() {}
-    virtual string codeGen() { return ""; }
+    virtual string genCode() { return ""; }
 };

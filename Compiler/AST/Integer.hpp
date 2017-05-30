@@ -11,5 +11,5 @@ public:
 		this->value = atoi(value);
 	}
     virtual ~Integer() {}
-    virtual string codeGen() { return to_string(value); }
+    virtual string genCode() { return to_string(value); }
 };

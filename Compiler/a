@@ -1,4 +1,8 @@
 func main(int c) {
 	a = 5
 	b = 4
+	
+	loop i: 6..9 {
+		
+	}
 }

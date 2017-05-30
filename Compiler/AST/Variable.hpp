@@ -13,5 +13,5 @@ public:
         this->name = string(temp);
     }
     virtual ~Variable() {}
-    virtual string codeGen() { return name; }
+    virtual string genCode() { return name; }
 };

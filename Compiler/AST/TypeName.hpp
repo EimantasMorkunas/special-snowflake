@@ -10,5 +10,5 @@ public:
         this->name = name;
 	}
     virtual ~TypeName() {}
-    virtual string codeGen() { return *name; }
+    virtual string genCode() { return *name; }
 };
