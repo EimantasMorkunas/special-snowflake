@@ -12,15 +12,13 @@ class Code : public Node {
 public:
 	vector<Function*> FunctionList;
     virtual ~Code() {}
-    virtual string genCode() {
-		CodeGenContext* context = new CodeGenContext();
+    virtual string genCode(CodeGenContext* context) {
 		string result = "";
 		for(std::vector<Function*>::iterator it = FunctionList.begin(); it != FunctionList.end(); ++it) {
 			context->variableTypes = new map<string, string>();
 			result += (*it)->genCode(context);
 			delete context->variableTypes;
 		}
-		delete context;
 		return result;
 	}
 };

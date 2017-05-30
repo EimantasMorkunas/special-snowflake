@@ -3,7 +3,6 @@
 #include <vector>
 #include <string>
 #include "CodeGenContext.hpp"
-#include "Node.hpp"
 #include "Parameter.hpp"
 
 using namespace std;
@@ -16,6 +15,9 @@ public:
 		string result = "";
 		for(std::vector<Parameter*>::iterator it = ParameterList.begin(); it != ParameterList.end(); ++it) {
 			result += "," + (*it)->genCode(context);
+		}
+		if (result == "") {
+			return result;
 		}
 		return result.substr(1);
 	}

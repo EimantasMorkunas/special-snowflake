@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include "CodeGenContext.hpp"
-#include "Node.hpp"
 #include "TypeName.hpp"
 
 using namespace std;

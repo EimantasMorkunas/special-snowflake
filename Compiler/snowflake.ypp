@@ -1,10 +1,12 @@
 %{
     #include <stdio.h>
     #include <iostream>
+    #include <map>
     #include "AST/includes.hpp"
     void yyerror (char *s);
     int yylex();
     using namespace std;
+    map <string, ParamStruct> paramsOfFunctions;
 %}
 
 %union
@@ -29,7 +31,7 @@
 	VarOrInteger* varOrInteger;
 } 
 
-%start code
+%start start
 %token <node> IF
 %token <node> ELSE
 %token <node> LOOP
@@ -61,7 +63,7 @@
 %type <assignment> assignment
 %type <identifier> identifier
 %type <function> func
-%type <code> code
+%type <code> code start
 %type <typeName> typeName;
 %type <params> funcParams funcParamsSub
 %type <param> funcParam
@@ -76,7 +78,10 @@
 
 %%
 
-code            : func                                      {cout << "code" << endl; $$ = new Code(); $$->FunctionList.push_back($1); cout << $$->genCode() << endl;}
+start           : code                                      {$$ = $1; CodeGenContext *c = new CodeGenContext(&paramsOfFunctions); cout << $$->genCode(c) << endl; delete c;}
+                ;
+
+code            : func                                      {cout << "code" << endl; $$ = new Code(); $$->FunctionList.push_back($1);}
                 | code func                                 {printf("func code\n"); $1->FunctionList.push_back($2);}
 
 statements      : statement                                 {printf("statement\n"); $$ = new Block(); $$->StatementList.push_back($1);}
@@ -185,7 +190,13 @@ bool            : booleanExp                                {printf("funcCall\n"
                 | NOT_INIT booleanExp ')'                   {printf("funcCall\n");}
                 ;
 
-func            : FUNC VAR '(' funcParams ')' '{' block '}' {printf("funcCall\n"); $$ = new Function($2, $4, $7);}
+func            : FUNC VAR '(' funcParams ')' '{' block '}' {
+                                                                printf("funcCall\n"); $$ = new Function($2, $4, $7);
+                                                                vector<ParamStruct> params;
+                                                                for(std::vector<Parameter*>::iterator it = $4->ParameterList.begin(); it != $4->ParameterList.end(); ++it) {
+                                                                    params.push_back(ParamStruct(&(*it)->name->name, (*it)->type->name, (*it)->isOut));
+                                                                }
+                                                            }
                 ;
                 
 funcParamsSub   : funcParam                                 {printf("funcCall\n"); $$ = new Parameters(); $$->ParameterList.push_back($1);}
