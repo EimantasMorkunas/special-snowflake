@@ -60,12 +60,6 @@
 %token <s> MULT
 %token <s> DIV
 %token <s> MOD
-%token EQ
-%token NOT_EQ
-%token LTE
-%token GTE
-%token AND
-%token OR
 %token RNG
 %token NOT_INIT
 %token ARRAY_INIT
@@ -169,7 +163,7 @@ logical         : IF eval '{' block '}' ELSE '{' block '}'  {printf("if with els
                 ;
 
 loop            : LOOP VAR ':' range '{' block '}'          {printf("loop with range\n"); $$ = new LoopFor($2, $4, $6);}
-                | LOOP eval '{' block '}'                   {printf("loop with cond\n");}
+                | LOOP eval '{' block '}'                   {printf("loop with cond\n"); $$ = new LoopWhile($2, $4);}
                 ;
 
 range           : varOrInteger RNG varOrInteger             {printf("range from to\n"); $$ = new Range($1, $3);}

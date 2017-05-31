@@ -12,6 +12,7 @@
 #include "Code.hpp"
 #include "Loop.hpp"
 #include "LoopFor.hpp"
+#include "LoopWhile.hpp"
 #include "Range.hpp"
 #include "ExpressionBasic.hpp"
 #include "Logical.hpp"

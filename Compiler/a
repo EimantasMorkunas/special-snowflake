@@ -9,4 +9,10 @@ func main(int c) {
 	if !(a, 7, "stringas" > g, b < 'a', f) || a , d < b, e {
 	
 	}
+	
+	loop a > b > c {
+	
+	}
+	
+	
 }
