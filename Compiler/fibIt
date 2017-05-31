@@ -1,0 +1,11 @@
+func main() {
+	prev = 0
+	current = 1
+	temp = 0
+	loop i: 10 {
+		temp = current
+		current = current + prev
+		prev = temp
+	}
+	printf("%d\n", current)
+}

@@ -121,7 +121,10 @@
 start           : code                                      {
                                                                 $$ = $1;
                                                                 CodeGenContext *c = new CodeGenContext(&paramsOfFunctions);
-                                                                cout << "#include <stdio.h>" << endl << $$->genCode(c) << endl; delete c;
+                                                                cout << "#include <stdio.h>" << endl
+                                                                    << "#include <iomanip>" << endl
+                                                                    << "using namespace std;" << endl
+                                                                    << $$->genCode(c) << endl; delete c;
                                                             }
                 ;
 
