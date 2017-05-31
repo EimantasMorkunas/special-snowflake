@@ -375,8 +375,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 34
-#define YY_END_OF_BUFFER 35
+#define YY_NUM_RULES 36
+#define YY_END_OF_BUFFER 37
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -386,15 +386,15 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[91] =
     {   0,
-        0,    0,   35,   34,   33,   34,   34,   15,   34,   34,
-       10,   13,   11,   12,   34,   14,   26,   10,   10,   10,
-       25,   25,   25,   25,   25,   25,   25,   25,   25,   34,
-       22,   16,    0,   29,   20,    0,    0,   26,   31,   23,
-       32,    0,   26,   28,   18,   17,   19,   25,   25,   25,
-       25,   25,   25,    1,   25,   25,   25,   25,   25,   21,
-       30,   32,   27,   26,   25,   25,   25,   25,   25,    6,
-       25,    5,   25,   25,    0,   27,   28,    8,    2,   25,
-       25,    4,    3,   25,   24,    0,    7,   25,    9,    0
+        0,    0,   37,   36,   35,   36,   36,   23,   36,   36,
+       18,   21,   19,   20,   36,   22,   28,   10,   18,   11,
+       27,   27,   27,   27,   27,   27,   27,   27,   27,   36,
+       24,   12,    0,   31,   16,    0,    0,   28,   33,   25,
+       34,    0,   28,   30,   14,   13,   15,   27,   27,   27,
+       27,   27,   27,    1,   27,   27,   27,   27,   27,   17,
+       32,   34,   29,   28,   27,   27,   27,   27,   27,    6,
+       27,    5,   27,   27,    0,   29,   30,    8,    2,   27,
+       27,    4,    3,   27,   26,    0,    7,   27,    9,    0
     } ;
 
 static yyconst YY_CHAR yy_ec[256] =
@@ -854,130 +854,140 @@ YY_RULE_SETUP
 case 10:
 YY_RULE_SETUP
 #line 18 "snowflake.lpp"
-{return yytext[0];}
+{yylval.s = new string(yytext);return LT;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 19 "snowflake.lpp"
-{yylval.s = new string(yytext);return PLUS;}
+{yylval.s = new string(yytext);return GT;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 20 "snowflake.lpp"
-{yylval.s = new string(yytext);return MINUS;}
+{yylval.s = new string(yytext);return NOT_EQ;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 21 "snowflake.lpp"
-{yylval.s = new string(yytext);return MULT;}
+{yylval.s = new string(yytext);return EQ;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 22 "snowflake.lpp"
-{yylval.s = new string(yytext);return DIV;}
+{yylval.s = new string(yytext);return LTE;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 23 "snowflake.lpp"
-{yylval.s = new string(yytext);return MOD;}
+{yylval.s = new string(yytext);return GTE;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 24 "snowflake.lpp"
-{return NOT_EQ;}
+{yylval.s = new string(yytext);return AND;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 25 "snowflake.lpp"
-{return EQ;}
+{yylval.s = new string(yytext);return OR;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 26 "snowflake.lpp"
-{return LTE;}
+{return yytext[0];}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 27 "snowflake.lpp"
-{return GTE;}
+{yylval.s = new string(yytext);return PLUS;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 28 "snowflake.lpp"
-{return AND;}
+{yylval.s = new string(yytext);return MINUS;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 29 "snowflake.lpp"
-{return OR;}
+{yylval.s = new string(yytext);return MULT;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 30 "snowflake.lpp"
-{return NOT_INIT;}
+{yylval.s = new string(yytext);return DIV;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 31 "snowflake.lpp"
-{return ARRAY_INIT;}
+{yylval.s = new string(yytext);return MOD;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 32 "snowflake.lpp"
-{return BOOLEAN;}
+{return NOT_INIT;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 33 "snowflake.lpp"
-{yylval.variable = new Variable(yytext); return VAR;}
+{return ARRAY_INIT;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 34 "snowflake.lpp"
-{yylval.integer = new Integer(yytext); return INTEGER;}
+{yylval.s = new string(yytext);return BOOLEAN;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 35 "snowflake.lpp"
-{return FLOAT;}
+{yylval.variable = new Variable(yytext); return VAR;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 36 "snowflake.lpp"
-{return FLOAT;}
+{yylval.integer = new Integer(yytext); return INTEGER;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 37 "snowflake.lpp"
-{yylval.s = new string(yytext); return STRING;}
+{return FLOAT;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 38 "snowflake.lpp"
-{return CHAR;}
+{return FLOAT;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 39 "snowflake.lpp"
-{return RNG;}
+{yylval.s = new string(yytext); return STRING;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 40 "snowflake.lpp"
-{}
+{yylval.s = new string(yytext); return CHAR;}
 	YY_BREAK
 case 33:
-/* rule 33 can match eol */
 YY_RULE_SETUP
 #line 41 "snowflake.lpp"
-{}
+{return RNG;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
+#line 42 "snowflake.lpp"
+{}
+	YY_BREAK
+case 35:
+/* rule 35 can match eol */
+YY_RULE_SETUP
 #line 43 "snowflake.lpp"
+{}
+	YY_BREAK
+case 36:
+YY_RULE_SETUP
+#line 45 "snowflake.lpp"
 ECHO;
 	YY_BREAK
-#line 981 "lex.yy.c"
+#line 991 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1978,7 +1988,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 43 "snowflake.lpp"
+#line 45 "snowflake.lpp"
 
 
 int yywrap (void) { return 1; }

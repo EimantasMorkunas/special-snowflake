@@ -68,12 +68,14 @@ extern int yydebug;
     OR = 278,
     RNG = 279,
     NOT_INIT = 280,
-    BOOLEAN = 281,
-    ARRAY_INIT = 282,
-    INT_NAME = 283,
-    FLOAT_NAME = 284,
-    CHAR_NAME = 285,
-    STRING_NAME = 286
+    ARRAY_INIT = 281,
+    INT_NAME = 282,
+    FLOAT_NAME = 283,
+    CHAR_NAME = 284,
+    STRING_NAME = 285,
+    BOOLEAN = 286,
+    LT = 287,
+    GT = 288
   };
 #endif
 
@@ -102,11 +104,20 @@ union YYSTYPE
 	Loop* loop;
 	Range* range;
 	VarOrInteger* varOrInteger;
+	Logical* logical;
+	Evaluation* eval;
+	Bool* bb;
+	BooleanExp* booleanExp;
+	Identifiers* identifiers;
+	EvalGroup* evalGroup;
+	EvalGroupSub* evalGroupSub;
+	String* strVal;
+	Char* charVal;
     FunctionCall* call;
     CallParameters* callParams;
     CallParameter* callParam;
 
-#line 110 "snowflake.tab.hpp" /* yacc.c:1909  */
+#line 121 "snowflake.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

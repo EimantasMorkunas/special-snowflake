@@ -62,18 +62,18 @@
 %token <s> MOD
 %token RNG
 %token NOT_INIT
+%token <s> EQ
+%token <s> NOT_EQ
+%token <s> LTE
+%token <s> GTE
+%token <s> AND
+%token <s> OR
 %token ARRAY_INIT
 %token <s> INT_NAME
 %token <s> FLOAT_NAME
 %token <s> CHAR_NAME
 %token <s> STRING_NAME
-%token <s> AND
-%token <s> OR
 %token <s> BOOLEAN
-%token <s> LTE
-%token <s> GTE
-%token <s> EQ
-%token <s> NOT_EQ
 %token <s> LT
 %token <s> GT
 
@@ -147,7 +147,7 @@ arrayExp        : varOrInteger ',' identifier               {printf("array init 
 
 exp             : identifier                                {printf("exp with ident\n"); $$ = new ExpressionBasic($1);}
                 | identifier operator exp                   {printf("exp with op and exp\n"); $$ = new ExpressionOp($1, $2, $3);}
-                | identifier operator '(' exp ')'           {printf("exp with op and (exp)\n");}
+                | identifier operator '(' exp ')'           {printf("exp with op and (exp)\n"); $$ = new ExpressionBrackets($1, $2, $4);}
                 ;
 
 operator        : PLUS                                      {printf("+\n");}

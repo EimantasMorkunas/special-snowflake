@@ -132,12 +132,14 @@ extern int yydebug;
     OR = 278,
     RNG = 279,
     NOT_INIT = 280,
-    BOOLEAN = 281,
-    ARRAY_INIT = 282,
-    INT_NAME = 283,
-    FLOAT_NAME = 284,
-    CHAR_NAME = 285,
-    STRING_NAME = 286
+    ARRAY_INIT = 281,
+    INT_NAME = 282,
+    FLOAT_NAME = 283,
+    CHAR_NAME = 284,
+    STRING_NAME = 285,
+    BOOLEAN = 286,
+    LT = 287,
+    GT = 288
   };
 #endif
 
@@ -166,11 +168,20 @@ union YYSTYPE
 	Loop* loop;
 	Range* range;
 	VarOrInteger* varOrInteger;
+	Logical* logical;
+	Evaluation* eval;
+	Bool* bb;
+	BooleanExp* booleanExp;
+	Identifiers* identifiers;
+	EvalGroup* evalGroup;
+	EvalGroupSub* evalGroupSub;
+	String* strVal;
+	Char* charVal;
     FunctionCall* call;
     CallParameters* callParams;
     CallParameter* callParam;
 
-#line 174 "snowflake.tab.cpp" /* yacc.c:355  */
+#line 185 "snowflake.tab.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -187,7 +198,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 191 "snowflake.tab.cpp" /* yacc.c:358  */
+#line 202 "snowflake.tab.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -429,21 +440,21 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   141
+#define YYLAST   140
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  49
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  35
+#define YYNNTS  34
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  81
+#define YYNRULES  80
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  134
+#define YYNSTATES  133
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   286
+#define YYMAXUTOK   288
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -455,16 +466,16 @@ static const yytype_uint8 yytranslate[] =
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,    36,     2,     2,
-      42,    43,    34,    32,    39,    33,     2,    35,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,    46,     2,
-      47,    38,    48,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,    38,     2,     2,
+      44,    45,    36,    34,    41,    35,     2,    37,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,    48,     2,
+       2,    40,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,    40,     2,    41,    37,     2,     2,     2,     2,     2,
+       2,    42,     2,    43,    39,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,    44,     2,    45,     2,     2,     2,     2,
+       2,     2,     2,    46,     2,    47,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -480,22 +491,22 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28,    29,    30,    31
+      25,    26,    27,    28,    29,    30,    31,    32,    33
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_uint16 yyrline[] =
 {
-       0,    94,    94,    97,    98,   100,   101,   104,   105,   108,
-     109,   110,   111,   114,   115,   116,   117,   120,   121,   124,
-     125,   128,   129,   130,   133,   134,   135,   136,   137,   140,
-     141,   142,   145,   146,   149,   150,   153,   154,   157,   158,
-     161,   164,   165,   168,   169,   172,   175,   176,   179,   180,
-     181,   182,   183,   184,   187,   188,   191,   192,   193,   194,
-     197,   198,   201,   202,   205,   217,   218,   221,   222,   225,
-     226,   229,   232,   233,   236,   237,   240,   241,   244,   245,
-     246,   247
+       0,   114,   114,   117,   118,   120,   121,   124,   125,   128,
+     129,   130,   131,   134,   135,   136,   137,   140,   141,   144,
+     145,   148,   149,   150,   153,   154,   155,   156,   157,   160,
+     161,   162,   165,   166,   169,   170,   173,   174,   177,   178,
+     181,   182,   185,   186,   189,   192,   193,   196,   197,   198,
+     199,   200,   201,   204,   205,   208,   209,   210,   211,   214,
+     215,   218,   219,   222,   234,   235,   238,   239,   242,   243,
+     246,   249,   250,   253,   254,   257,   258,   261,   262,   263,
+     264
 };
 #endif
 
@@ -507,16 +518,16 @@ static const char *const yytname[] =
   "$end", "error", "$undefined", "IF", "ELSE", "LOOP", "FUNC", "OUT",
   "VAR", "INTEGER", "FLOAT", "CHAR", "STRING", "PLUS", "MINUS", "MULT",
   "DIV", "MOD", "EQ", "NOT_EQ", "LTE", "GTE", "AND", "OR", "RNG",
-  "NOT_INIT", "BOOLEAN", "ARRAY_INIT", "INT_NAME", "FLOAT_NAME",
-  "CHAR_NAME", "STRING_NAME", "'+'", "'-'", "'*'", "'/'", "'%'", "'^'",
-  "'='", "','", "'['", "']'", "'('", "')'", "'{'", "'}'", "':'", "'<'",
-  "'>'", "$accept", "start", "code", "statements", "block", "statement",
+  "NOT_INIT", "ARRAY_INIT", "INT_NAME", "FLOAT_NAME", "CHAR_NAME",
+  "STRING_NAME", "BOOLEAN", "LT", "GT", "'+'", "'-'", "'*'", "'/'", "'%'",
+  "'^'", "'='", "','", "'['", "']'", "'('", "')'", "'{'", "'}'", "':'",
+  "$accept", "start", "code", "statements", "block", "statement",
   "assignment", "array", "arrayExp", "exp", "operator", "logical", "loop",
-  "range", "eval", "booleanExp", "evalGroupI", "logicalOperator",
-  "identifiers", "evalGroup", "evalGroupSub", "comp", "number",
-  "identifier", "varOrInteger", "bool", "func", "funcParamsSub",
-  "funcParams", "funcParam", "funcCall", "funcCallParamsSub",
-  "funcCallParams", "funcCallParam", "typeName", YY_NULLPTR
+  "range", "eval", "booleanExp", "logicalOperator", "identifiers",
+  "evalGroup", "evalGroupSub", "comp", "number", "identifier",
+  "varOrInteger", "bool", "func", "funcParamsSub", "funcParams",
+  "funcParam", "funcCall", "funcCallParamsSub", "funcCallParams",
+  "funcCallParam", "typeName", YY_NULLPTR
 };
 #endif
 
@@ -528,15 +539,15 @@ static const yytype_uint16 yytoknum[] =
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
      275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
-     285,   286,    43,    45,    42,    47,    37,    94,    61,    44,
-      91,    93,    40,    41,   123,   125,    58,    60,    62
+     285,   286,   287,   288,    43,    45,    42,    47,    37,    94,
+      61,    44,    91,    93,    40,    41,   123,   125,    58
 };
 # endif
 
-#define YYPACT_NINF -92
+#define YYPACT_NINF -88
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-92)))
+  (!!((Yystate) == (-88)))
 
 #define YYTABLE_NINF -1
 
@@ -547,20 +558,20 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -3,    30,    47,    -3,   -92,     7,   -92,   -92,    69,   -92,
-     -92,   -92,   -92,    12,    18,   -92,    23,    69,    20,    57,
-     -92,   -92,    34,   -92,    65,    70,   -28,    34,    22,   -92,
-     -92,   -92,   -92,   -92,   -92,   -92,   -92,   -92,   -92,    75,
-     -92,    24,   -92,   -92,    15,   -92,   -92,   -92,    37,    42,
-      25,    13,    48,    95,   -92,   -92,    46,    34,   -92,   -92,
-     -92,   -92,   100,   -92,   -92,   100,   -92,   -92,    65,    48,
-      34,    48,   100,   -92,    53,   101,   -92,   -92,    52,   100,
-     -92,    55,    76,   -92,   -92,    68,   -92,    15,   -92,   -92,
-      77,    96,    78,    81,    85,   -12,   117,   -92,   -92,   -92,
-     -92,   -92,     8,    88,   -92,    95,   -92,   123,   100,    34,
-      48,   -92,   -92,   100,   -92,     3,   -92,   100,   -92,   100,
-     -92,     2,   -92,    83,   -92,   -92,    86,   -92,    34,   -92,
-     -92,   -92,    87,   -92
+       5,    20,     6,     5,   -88,    -1,   -88,   -88,    84,   -88,
+     -88,   -88,   -88,     4,    21,   -88,     9,    84,    41,    61,
+     -88,   -88,    34,   -88,    24,    50,    23,    34,    27,   -88,
+     -88,   -88,   -88,   -88,   -88,   -88,   -88,   -88,   -88,    74,
+     -88,    42,   -88,    58,   -88,   -88,   -88,    28,    32,    43,
+      15,    64,    85,   -88,   -88,    53,    34,   -88,   -88,   -88,
+     -88,   -88,   -88,    92,    92,   -88,   -88,    24,    64,    34,
+      64,    92,   -88,    75,    93,   -88,   -88,    72,    92,   -88,
+      76,    73,   -88,   -88,    77,   -88,    58,   -88,   -88,    79,
+      95,    80,    78,    81,   -31,   112,   -88,   -88,   -88,   -88,
+     -88,    10,    83,   -88,    85,   -88,   122,    92,    34,    64,
+     -88,   -88,    92,   -88,    -2,   -88,    92,   -88,    92,   -88,
+       0,   -88,    82,   -88,   -88,    86,   -88,    34,   -88,   -88,
+     -88,    87,   -88
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -568,38 +579,38 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     0,     0,     2,     3,     0,     1,     4,    68,    78,
-      79,    80,    81,    67,     0,    65,     0,     0,     0,     0,
-      69,    66,     8,    70,     0,     0,     0,     7,     0,     5,
-       9,    10,    11,    12,    56,    54,    55,    58,    59,     0,
-      39,     0,    62,    38,     0,    40,    57,    43,    37,    56,
-       0,     0,     0,    75,     6,    64,     0,     8,    52,    53,
-      50,    51,     0,    48,    49,     0,    41,    42,     0,     0,
-       8,     0,     0,    16,    13,    21,    60,    61,     0,     0,
-      76,    74,     0,    72,    63,     0,    44,    47,    45,    36,
-       0,    35,     0,     0,    20,     0,     0,    24,    25,    26,
-      27,    28,     0,     0,    77,     0,    71,    31,     0,     8,
-       0,    33,    17,     0,    18,     0,    14,     0,    22,     0,
-      73,     0,    46,     0,    34,    19,     0,    15,     8,    30,
-      32,    23,     0,    29
+       0,     0,     0,     2,     3,     0,     1,     4,    67,    77,
+      78,    79,    80,    66,     0,    64,     0,     0,     0,     0,
+      68,    65,     8,    69,     0,     0,     0,     7,     0,     5,
+       9,    10,    11,    12,    55,    53,    54,    57,    58,     0,
+      39,     0,    61,     0,    38,    56,    42,    37,    55,     0,
+       0,     0,    74,     6,    63,     0,     8,    51,    52,    49,
+      50,    47,    48,     0,     0,    40,    41,     0,     0,     8,
+       0,     0,    16,    13,    21,    59,    60,     0,     0,    75,
+      73,     0,    71,    62,     0,    43,    46,    44,    36,     0,
+      35,     0,     0,    20,     0,     0,    24,    25,    26,    27,
+      28,     0,     0,    76,     0,    70,    31,     0,     8,     0,
+      33,    17,     0,    18,     0,    14,     0,    22,     0,    72,
+       0,    45,     0,    34,    19,     0,    15,     8,    30,    32,
+      23,     0,    29
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-     -92,   -92,   -92,   -92,   -57,   103,    35,   -92,   -92,   -91,
-     -92,    14,   -92,   -92,   -23,    94,   -92,   -92,   -64,   -92,
-      26,    49,   -92,   -47,   -62,   -92,   134,   -92,   -92,   121,
-     -92,   -92,   -92,    36,   -92
+     -88,   -88,   -88,   -88,   -56,   101,    35,   -88,   -88,   -87,
+     -88,    12,   -88,   -88,   -20,    94,   -88,   -63,   -88,    29,
+      49,   -88,   -48,   -61,   -88,   134,   -88,   -88,   121,   -88,
+     -88,   -88,    36,   -88
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     3,    27,    28,    29,    30,    73,    93,    74,
-     102,    31,    32,    90,    41,    42,    43,    68,    44,    45,
-      88,    65,    46,    47,    78,    48,     4,    13,    14,    15,
-      33,    81,    82,    83,    16
+      -1,     2,     3,    27,    28,    29,    30,    72,    92,    73,
+     101,    31,    32,    89,    41,    42,    67,    43,    44,    87,
+      64,    45,    46,    77,    47,     4,    13,    14,    15,    33,
+      80,    81,    82,    16
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -607,60 +618,60 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      85,    87,    50,     1,    75,    24,    80,    91,    95,    94,
-      51,   118,    52,    92,    53,    86,    34,    35,    36,    37,
-      38,    34,    35,    36,    37,    38,   126,    62,   127,   114,
-      19,    20,   104,    58,    59,    60,    61,    24,     5,    25,
-      71,    51,    26,    52,    87,    89,   128,     6,   124,     8,
-     117,    17,   123,    72,    62,    75,    76,    77,    80,    66,
-      67,    18,    63,    64,    22,    23,   125,    55,    57,    70,
-      75,   132,    75,    34,    35,    36,    37,    38,    49,    35,
-      36,    37,    38,    34,    35,    36,    37,    38,    69,    84,
-      39,    40,    96,   103,   105,    39,    40,     9,    10,    11,
-      12,    40,    79,    34,    35,    36,    37,    38,    34,    35,
-      36,    37,    38,   107,    97,    98,    99,   100,   101,   106,
-     110,   109,   112,   111,   113,   115,   119,   121,   130,   131,
-      54,   116,   133,    56,   122,   129,   108,     7,    21,     0,
-       0,   120
+      84,    86,    74,    24,    79,    49,     6,    90,    94,    93,
+      63,     1,   113,    91,   117,    85,    19,    20,    34,    35,
+      36,    37,    38,    34,    35,    36,    37,    38,     5,   125,
+     103,   126,    34,    35,    36,    37,    38,    24,    50,    25,
+      51,    70,    26,     8,    86,    17,   127,    88,   123,    39,
+      65,    66,   122,    74,   116,    40,    79,    71,    48,    35,
+      36,    37,    38,    50,   124,    51,    18,    52,    74,    23,
+      74,   131,    75,    76,    54,    39,    57,    58,    59,    60,
+      68,    40,    34,    35,    36,    37,    38,    22,    56,    69,
+      61,    62,    78,    34,    35,    36,    37,    38,    83,    63,
+      34,    35,    36,    37,    38,    40,    96,    97,    98,    99,
+     100,     9,    10,    11,    12,   102,    95,   104,   105,   109,
+     114,   111,   112,   118,   106,   108,   120,   110,    53,   129,
+     115,   130,   128,    55,   132,   107,   121,     7,    21,     0,
+     119
 };
 
-static const yytype_int16 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-      57,    65,    25,     6,    51,     3,    53,    69,    72,    71,
-      38,   102,    40,    70,    42,    62,     8,     9,    10,    11,
-      12,     8,     9,    10,    11,    12,   117,    39,   119,    41,
-       7,     8,    79,    18,    19,    20,    21,     3,     8,     5,
-      27,    38,     8,    40,   108,    68,    44,     0,   110,    42,
-      42,    39,   109,    40,    39,   102,     8,     9,   105,    22,
-      23,    43,    47,    48,    44,     8,   113,    45,    44,    44,
-     117,   128,   119,     8,     9,    10,    11,    12,     8,     9,
-      10,    11,    12,     8,     9,    10,    11,    12,    46,    43,
-      25,    26,    39,    41,    39,    25,    26,    28,    29,    30,
-      31,    26,     7,     8,     9,    10,    11,    12,     8,     9,
-      10,    11,    12,    45,    13,    14,    15,    16,    17,    43,
-      24,    44,    41,    45,    39,     8,    38,     4,    45,    43,
-      27,    96,    45,    39,   108,   121,    87,     3,    17,    -1,
-      -1,   105
+      56,    64,    50,     3,    52,    25,     0,    68,    71,    70,
+      41,     6,    43,    69,   101,    63,     7,     8,     8,     9,
+      10,    11,    12,     8,     9,    10,    11,    12,     8,   116,
+      78,   118,     8,     9,    10,    11,    12,     3,    40,     5,
+      42,    26,     8,    44,   107,    41,    46,    67,   109,    25,
+      22,    23,   108,   101,    44,    31,   104,    42,     8,     9,
+      10,    11,    12,    40,   112,    42,    45,    44,   116,     8,
+     118,   127,     8,     9,    47,    25,    18,    19,    20,    21,
+      48,    31,     8,     9,    10,    11,    12,    46,    46,    46,
+      32,    33,     7,     8,     9,    10,    11,    12,    45,    41,
+       8,     9,    10,    11,    12,    31,    13,    14,    15,    16,
+      17,    27,    28,    29,    30,    43,    41,    41,    45,    24,
+       8,    43,    41,    40,    47,    46,     4,    47,    27,    47,
+      95,    45,   120,    39,    47,    86,   107,     3,    17,    -1,
+     104
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     6,    50,    51,    75,     8,     0,    75,    42,    28,
-      29,    30,    31,    76,    77,    78,    83,    39,    43,     7,
-       8,    78,    44,     8,     3,     5,     8,    52,    53,    54,
-      55,    60,    61,    79,     8,     9,    10,    11,    12,    25,
-      26,    63,    64,    65,    67,    68,    71,    72,    74,     8,
-      63,    38,    40,    42,    54,    45,    64,    44,    18,    19,
-      20,    21,    39,    47,    48,    70,    22,    23,    66,    46,
-      44,    27,    40,    56,    58,    72,     8,     9,    73,     7,
-      72,    80,    81,    82,    43,    53,    72,    67,    69,    63,
-      62,    73,    53,    57,    73,    67,    39,    13,    14,    15,
-      16,    17,    59,    41,    72,    39,    43,    45,    70,    44,
-      24,    45,    41,    39,    41,     8,    55,    42,    58,    38,
-      82,     4,    69,    53,    73,    72,    58,    58,    44,    60,
-      45,    43,    53,    45
+       0,     6,    50,    51,    74,     8,     0,    74,    44,    27,
+      28,    29,    30,    75,    76,    77,    82,    41,    45,     7,
+       8,    77,    46,     8,     3,     5,     8,    52,    53,    54,
+      55,    60,    61,    78,     8,     9,    10,    11,    12,    25,
+      31,    63,    64,    66,    67,    70,    71,    73,     8,    63,
+      40,    42,    44,    54,    47,    64,    46,    18,    19,    20,
+      21,    32,    33,    41,    69,    22,    23,    65,    48,    46,
+      26,    42,    56,    58,    71,     8,     9,    72,     7,    71,
+      79,    80,    81,    45,    53,    71,    66,    68,    63,    62,
+      72,    53,    57,    72,    66,    41,    13,    14,    15,    16,
+      17,    59,    43,    71,    41,    45,    47,    69,    46,    24,
+      47,    43,    41,    43,     8,    55,    44,    58,    40,    81,
+       4,    68,    53,    72,    71,    58,    58,    46,    60,    47,
+      45,    53,    47
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -670,11 +681,11 @@ static const yytype_uint8 yyr1[] =
       54,    54,    54,    55,    55,    55,    55,    56,    56,    57,
       57,    58,    58,    58,    59,    59,    59,    59,    59,    60,
       60,    60,    61,    61,    62,    62,    63,    63,    64,    64,
-      65,    66,    66,    67,    67,    68,    69,    69,    70,    70,
-      70,    70,    70,    70,    71,    71,    72,    72,    72,    72,
-      73,    73,    74,    74,    75,    76,    76,    77,    77,    78,
-      78,    79,    80,    80,    81,    81,    82,    82,    83,    83,
-      83,    83
+      65,    65,    66,    66,    67,    68,    68,    69,    69,    69,
+      69,    69,    69,    70,    70,    71,    71,    71,    71,    72,
+      72,    73,    73,    74,    75,    75,    76,    76,    77,    77,
+      78,    79,    79,    80,    80,    81,    81,    82,    82,    82,
+      82
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -684,11 +695,11 @@ static const yytype_uint8 yyr2[] =
        1,     1,     1,     3,     5,     6,     3,     3,     3,     3,
        1,     1,     3,     5,     1,     1,     1,     1,     1,     9,
        7,     5,     7,     5,     3,     1,     3,     1,     1,     1,
-       1,     1,     1,     1,     3,     3,     3,     1,     1,     1,
+       1,     1,     1,     3,     3,     3,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     3,     8,     1,     3,     1,     0,     2,
-       3,     4,     1,     3,     1,     0,     1,     2,     1,     1,
-       1,     1
+       1,     1,     3,     8,     1,     3,     1,     0,     2,     3,
+       4,     1,     3,     1,     0,     1,     2,     1,     1,     1,
+       1
 };
 
 
@@ -1365,379 +1376,373 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 94 "snowflake.ypp" /* yacc.c:1646  */
+#line 114 "snowflake.ypp" /* yacc.c:1646  */
     {(yyval.code) = (yyvsp[0].code); CodeGenContext *c = new CodeGenContext(&paramsOfFunctions); cout << (yyval.code)->genCode(c) << endl; delete c;}
-#line 1371 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1382 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 97 "snowflake.ypp" /* yacc.c:1646  */
+#line 117 "snowflake.ypp" /* yacc.c:1646  */
     {cout << "code" << endl; (yyval.code) = new Code(); (yyval.code)->FunctionList.push_back((yyvsp[0].function));}
-#line 1377 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1388 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 98 "snowflake.ypp" /* yacc.c:1646  */
+#line 118 "snowflake.ypp" /* yacc.c:1646  */
     {printf("func code\n"); (yyvsp[-1].code)->FunctionList.push_back((yyvsp[0].function));}
-#line 1383 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1394 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 100 "snowflake.ypp" /* yacc.c:1646  */
+#line 120 "snowflake.ypp" /* yacc.c:1646  */
     {printf("statement\n"); (yyval.block) = new Block(); (yyval.block)->StatementList.push_back((yyvsp[0].statement));}
-#line 1389 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1400 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 101 "snowflake.ypp" /* yacc.c:1646  */
+#line 121 "snowflake.ypp" /* yacc.c:1646  */
     {printf("statement statements\n"); (yyvsp[-1].block)->StatementList.push_back((yyvsp[0].statement));}
-#line 1395 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1406 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 104 "snowflake.ypp" /* yacc.c:1646  */
+#line 124 "snowflake.ypp" /* yacc.c:1646  */
     {printf("block statements\n"); (yyval.block) = (yyvsp[0].block);}
-#line 1401 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1412 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 105 "snowflake.ypp" /* yacc.c:1646  */
+#line 125 "snowflake.ypp" /* yacc.c:1646  */
     {(yyval.block) = new Block();}
-#line 1407 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1418 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 108 "snowflake.ypp" /* yacc.c:1646  */
+#line 128 "snowflake.ypp" /* yacc.c:1646  */
     {printf("assignment\n");}
-#line 1413 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1424 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 109 "snowflake.ypp" /* yacc.c:1646  */
+#line 129 "snowflake.ypp" /* yacc.c:1646  */
     {printf("logical\n");}
-#line 1419 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1430 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 110 "snowflake.ypp" /* yacc.c:1646  */
+#line 130 "snowflake.ypp" /* yacc.c:1646  */
     {printf("loop\n");}
-#line 1425 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1436 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 111 "snowflake.ypp" /* yacc.c:1646  */
+#line 131 "snowflake.ypp" /* yacc.c:1646  */
     {printf("funcCall in statement\n");}
-#line 1431 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1442 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 114 "snowflake.ypp" /* yacc.c:1646  */
+#line 134 "snowflake.ypp" /* yacc.c:1646  */
     {printf("simple assignment\n"); (yyval.assignment) = new AssignmentBasic((yyvsp[-2].variable), (yyvsp[0].expression));}
-#line 1437 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1448 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 115 "snowflake.ypp" /* yacc.c:1646  */
+#line 135 "snowflake.ypp" /* yacc.c:1646  */
     {printf("multiple assignemnts\n");}
-#line 1443 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1454 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 116 "snowflake.ypp" /* yacc.c:1646  */
+#line 136 "snowflake.ypp" /* yacc.c:1646  */
     {printf("array element assignement\n");}
-#line 1449 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1460 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 117 "snowflake.ypp" /* yacc.c:1646  */
+#line 137 "snowflake.ypp" /* yacc.c:1646  */
     {printf("array assignement\n");}
-#line 1455 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1466 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 120 "snowflake.ypp" /* yacc.c:1646  */
+#line 140 "snowflake.ypp" /* yacc.c:1646  */
     {printf("array with special init\n");}
-#line 1461 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1472 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 121 "snowflake.ypp" /* yacc.c:1646  */
+#line 141 "snowflake.ypp" /* yacc.c:1646  */
     {printf("array with standard init\n");}
-#line 1467 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1478 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 124 "snowflake.ypp" /* yacc.c:1646  */
+#line 144 "snowflake.ypp" /* yacc.c:1646  */
     {printf("array init exp w/ default\n");}
-#line 1473 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1484 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 125 "snowflake.ypp" /* yacc.c:1646  */
+#line 145 "snowflake.ypp" /* yacc.c:1646  */
     {printf("array init exp\n");}
-#line 1479 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1490 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 128 "snowflake.ypp" /* yacc.c:1646  */
+#line 148 "snowflake.ypp" /* yacc.c:1646  */
     {printf("exp with ident\n"); (yyval.expression) = new ExpressionBasic((yyvsp[0].identifier));}
-#line 1485 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1496 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 129 "snowflake.ypp" /* yacc.c:1646  */
+#line 149 "snowflake.ypp" /* yacc.c:1646  */
     {printf("exp with op and exp\n"); (yyval.expression) = new ExpressionOp((yyvsp[-2].identifier), (yyvsp[-1].s), (yyvsp[0].expression));}
-#line 1491 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1502 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 130 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("exp with op and (exp)\n");}
-#line 1497 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 150 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("exp with op and (exp)\n"); (yyval.expression) = new ExpressionBrackets((yyvsp[-4].identifier), (yyvsp[-3].s), (yyvsp[-1].expression));}
+#line 1508 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 133 "snowflake.ypp" /* yacc.c:1646  */
+#line 153 "snowflake.ypp" /* yacc.c:1646  */
     {printf("+\n");}
-#line 1503 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1514 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 134 "snowflake.ypp" /* yacc.c:1646  */
+#line 154 "snowflake.ypp" /* yacc.c:1646  */
     {printf("-\n");}
-#line 1509 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1520 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 135 "snowflake.ypp" /* yacc.c:1646  */
+#line 155 "snowflake.ypp" /* yacc.c:1646  */
     {printf("*\n");}
-#line 1515 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1526 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 136 "snowflake.ypp" /* yacc.c:1646  */
+#line 156 "snowflake.ypp" /* yacc.c:1646  */
     {printf("/\n");}
-#line 1521 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1532 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 137 "snowflake.ypp" /* yacc.c:1646  */
+#line 157 "snowflake.ypp" /* yacc.c:1646  */
     {printf("%\n");}
-#line 1527 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1538 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 140 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("if with else\n");}
-#line 1533 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 160 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("if with else\n"); (yyval.logical) = new Logical(1, (yyvsp[-7].eval), (yyvsp[-5].block), (yyvsp[-1].block), nullptr);}
+#line 1544 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 141 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("if with else if\n");}
-#line 1539 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 161 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("if with else if\n"); (yyval.logical) = new Logical(2, (yyvsp[-5].eval), (yyvsp[-3].block), nullptr, (yyvsp[0].logical));}
+#line 1550 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 142 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("if no else\n");}
-#line 1545 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 162 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("if no else\n"); (yyval.logical) = new Logical(3, (yyvsp[-3].eval), (yyvsp[-1].block), nullptr, nullptr);}
+#line 1556 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 145 "snowflake.ypp" /* yacc.c:1646  */
+#line 165 "snowflake.ypp" /* yacc.c:1646  */
     {printf("loop with range\n"); (yyval.loop) = new LoopFor((yyvsp[-5].variable), (yyvsp[-3].range), (yyvsp[-1].block));}
-#line 1551 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1562 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 146 "snowflake.ypp" /* yacc.c:1646  */
+#line 166 "snowflake.ypp" /* yacc.c:1646  */
     {printf("loop with cond\n");}
-#line 1557 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1568 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 149 "snowflake.ypp" /* yacc.c:1646  */
+#line 169 "snowflake.ypp" /* yacc.c:1646  */
     {printf("range from to\n"); (yyval.range) = new Range((yyvsp[-2].varOrInteger), (yyvsp[0].varOrInteger));}
-#line 1563 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1574 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 150 "snowflake.ypp" /* yacc.c:1646  */
+#line 170 "snowflake.ypp" /* yacc.c:1646  */
     {printf("range to\n"); (yyval.range) = new Range(nullptr, (yyvsp[0].varOrInteger));}
-#line 1569 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1580 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 153 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("joint eval\n");}
-#line 1575 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 173 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("joint eval\n"); (yyval.eval) = new Evaluation((yyvsp[-2].bb), (*(yyvsp[-1].s)), (yyvsp[0].eval));}
+#line 1586 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 154 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("simple eval\n");}
-#line 1581 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 174 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("simple eval\n"); (yyval.eval) = new Evaluation((yyvsp[0].bb), "", nullptr);}
+#line 1592 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 157 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("evalGroupI in boolean exp\n");}
-#line 1587 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 177 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("evalGroupI in boolean exp\n"); (yyval.booleanExp) = new BooleanExp((yyvsp[0].evalGroup), "false");}
+#line 1598 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 158 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("BOOLEAN in bool exp\n");}
-#line 1593 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 178 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("BOOLEAN in bool exp\n"); (yyval.booleanExp) = new BooleanExp(nullptr, (*(yyvsp[0].s)));}
+#line 1604 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 161 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1599 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 181 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("and\n"); (yyval.s) = (yyvsp[0].s);}
+#line 1610 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 164 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1605 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 182 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("or\n"); (yyval.s) = (yyvsp[0].s);}
+#line 1616 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 165 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1611 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 185 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("identifiers1\n"); (yyval.identifiers) = new Identifiers(); (yyval.identifiers)->IdentifierList.push_back((yyvsp[0].identifier));}
+#line 1622 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 168 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("identifiers single\n");}
-#line 1617 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 186 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("identifiers2\n"); (yyvsp[-2].identifiers)->IdentifierList.push_back((yyvsp[0].identifier));}
+#line 1628 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 169 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("identifiers multiple\n");}
-#line 1623 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 189 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("evalGroup\n"); (yyval.evalGroup) = new EvalGroup((yyvsp[-2].identifiers), (*(yyvsp[-1].s)), (yyvsp[0].evalGroupSub));}
+#line 1634 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 172 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1629 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 192 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("evalGroupSub1\n"); (yyval.evalGroupSub) = new EvalGroupSub((yyvsp[-2].identifiers), (*(yyvsp[-1].s)), (yyvsp[0].evalGroupSub));}
+#line 1640 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 175 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1635 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 193 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("evalGroupSub2\n"); (yyval.evalGroupSub) = new EvalGroupSub((yyvsp[0].identifiers), "", nullptr);}
+#line 1646 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 176 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1641 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 196 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("lt\n"); (yyval.s) = (yyvsp[0].s);}
+#line 1652 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 179 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1647 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 197 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("gt\n"); (yyval.s) = (yyvsp[0].s);}
+#line 1658 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 180 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1653 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 198 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("lte\n"); (yyval.s) = (yyvsp[0].s);}
+#line 1664 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 181 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1659 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 199 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("gte\n"); (yyval.s) = (yyvsp[0].s);}
+#line 1670 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 182 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1665 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 200 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("eq\n"); (yyval.s) = (yyvsp[0].s);}
+#line 1676 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 183 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1671 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 201 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("noteq\n"); (yyval.s) = (yyvsp[0].s);}
+#line 1682 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 184 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n");}
-#line 1677 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 204 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("int in number\n"); }
+#line 1688 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 187 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("int in number\n");}
-#line 1683 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 205 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("float in number\n");}
+#line 1694 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 188 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("float in number\n");}
-#line 1689 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 208 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("var ident\n"); (yyval.identifier) = new Variable(*(yyvsp[0].variable));}
+#line 1700 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 191 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("var ident\n");}
-#line 1695 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 209 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("number ident\n"); }
+#line 1706 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 192 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("number ident\n");}
-#line 1701 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 210 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("char ident\n"); (yyval.identifier) = new Char(*(yyvsp[0].s));}
+#line 1712 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 193 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("char ident\n");}
-#line 1707 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 211 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("string ident\n"); (yyval.identifier) = new String(*(yyvsp[0].s));}
+#line 1718 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 194 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("string ident\n");}
-#line 1713 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 214 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcCall\n"); (yyval.varOrInteger) = new VarOrInteger((yyvsp[0].variable), nullptr);}
+#line 1724 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 197 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n"); (yyval.varOrInteger) = new VarOrInteger((yyvsp[0].variable), nullptr);}
-#line 1719 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 215 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcCall\n"); (yyval.varOrInteger) = new VarOrInteger(nullptr, (yyvsp[0].integer));}
+#line 1730 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 198 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n"); (yyval.varOrInteger) = new VarOrInteger(nullptr, (yyvsp[0].integer));}
-#line 1725 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 218 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcCall\n"); (yyval.bb) = new Bool((yyvsp[0].booleanExp), false);}
+#line 1736 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 201 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("booleanExp\n");}
-#line 1731 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 219 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcCall\n"); (yyval.bb) = new Bool((yyvsp[-1].booleanExp), true);}
+#line 1742 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 202 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("not booleanExp\n");}
-#line 1737 "snowflake.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 64:
-#line 205 "snowflake.ypp" /* yacc.c:1646  */
+#line 222 "snowflake.ypp" /* yacc.c:1646  */
     {
                                                                 printf("func\n");
                                                                 (yyval.function) = new Function((yyvsp[-6].variable), (yyvsp[-4].params), (yyvsp[-1].block));
@@ -1748,113 +1753,113 @@ yyreduce:
                                                                 }
                                                                 paramsOfFunctions[(yyvsp[-6].variable)->name] = bs;
                                                             }
-#line 1752 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1757 "snowflake.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 64:
+#line 234 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcParamsSub\n"); (yyval.params) = new Parameters(); (yyval.params)->ParameterList.push_back((yyvsp[0].param));}
+#line 1763 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 217 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcParamsSub\n"); (yyval.params) = new Parameters(); (yyval.params)->ParameterList.push_back((yyvsp[0].param));}
-#line 1758 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 235 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcParamsSub multiple\n"); (yyvsp[-2].params)->ParameterList.push_back((yyvsp[0].param));}
+#line 1769 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 218 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcParamsSub multiple\n"); (yyvsp[-2].params)->ParameterList.push_back((yyvsp[0].param));}
-#line 1764 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 238 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcParams\n"); (yyval.params) = (yyvsp[0].params);}
+#line 1775 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 221 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcParams\n"); (yyval.params) = (yyvsp[0].params);}
-#line 1770 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 239 "snowflake.ypp" /* yacc.c:1646  */
+    {(yyval.params) = new Parameters();}
+#line 1781 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 222 "snowflake.ypp" /* yacc.c:1646  */
-    {(yyval.params) = new Parameters();}
-#line 1776 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 242 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcParam\n"); (yyval.param) = new Parameter((yyvsp[0].variable), (yyvsp[-1].typeName), false);}
+#line 1787 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 225 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcParam\n"); (yyval.param) = new Parameter((yyvsp[0].variable), (yyvsp[-1].typeName), false);}
-#line 1782 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 243 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcParam Out\n"); (yyval.param) = new Parameter((yyvsp[0].variable), (yyvsp[-2].typeName), true);}
+#line 1793 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 226 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcParam Out\n"); (yyval.param) = new Parameter((yyvsp[0].variable), (yyvsp[-2].typeName), true);}
-#line 1788 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 246 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcCall\n"); (yyval.call) = new FunctionCall((yyvsp[-3].variable), (yyvsp[-1].callParams));}
+#line 1799 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 229 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCall\n"); (yyval.call) = new FunctionCall((yyvsp[-3].variable), (yyvsp[-1].callParams));}
-#line 1794 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 249 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcCallParamsSub single\n"); (yyval.callParams) = new CallParameters(); (yyval.callParams)->CallParameterList.push_back((yyvsp[0].callParam));}
+#line 1805 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 232 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCallParamsSub single\n"); (yyval.callParams) = new CallParameters(); (yyval.callParams)->CallParameterList.push_back((yyvsp[0].callParam));}
-#line 1800 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 250 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcCallParamsSub mass\n"); (yyvsp[-2].callParams)->CallParameterList.push_back((yyvsp[0].callParam));}
+#line 1811 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 233 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCallParamsSub mass\n"); (yyvsp[-2].callParams)->CallParameterList.push_back((yyvsp[0].callParam));}
-#line 1806 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 253 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("funcCallParams\n"); (yyval.callParams) = (yyvsp[0].callParams);}
+#line 1817 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 236 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("funcCallParams\n"); (yyval.callParams) = (yyvsp[0].callParams);}
-#line 1812 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 254 "snowflake.ypp" /* yacc.c:1646  */
+    {(yyval.callParams) = new CallParameters();}
+#line 1823 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 237 "snowflake.ypp" /* yacc.c:1646  */
-    {(yyval.callParams) = new CallParameters();}
-#line 1818 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 257 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("call param ident\n"); (yyval.callParam) = new CallParameter((yyvsp[0].identifier), false);}
+#line 1829 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 240 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("call param ident\n"); (yyval.callParam) = new CallParameter((yyvsp[0].identifier), false);}
-#line 1824 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 258 "snowflake.ypp" /* yacc.c:1646  */
+    {printf("call param out ident\n"); (yyval.callParam) = new CallParameter((yyvsp[0].identifier), true);}
+#line 1835 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 241 "snowflake.ypp" /* yacc.c:1646  */
-    {printf("call param out ident\n"); (yyval.callParam) = new CallParameter((yyvsp[0].identifier), true);}
-#line 1830 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 261 "snowflake.ypp" /* yacc.c:1646  */
+    {(yyval.typeName) = new TypeName((yyvsp[0].s));}
+#line 1841 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 244 "snowflake.ypp" /* yacc.c:1646  */
+#line 262 "snowflake.ypp" /* yacc.c:1646  */
     {(yyval.typeName) = new TypeName((yyvsp[0].s));}
-#line 1836 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1847 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 245 "snowflake.ypp" /* yacc.c:1646  */
+#line 263 "snowflake.ypp" /* yacc.c:1646  */
     {(yyval.typeName) = new TypeName((yyvsp[0].s));}
-#line 1842 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1853 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 246 "snowflake.ypp" /* yacc.c:1646  */
+#line 264 "snowflake.ypp" /* yacc.c:1646  */
     {(yyval.typeName) = new TypeName((yyvsp[0].s));}
-#line 1848 "snowflake.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 81:
-#line 247 "snowflake.ypp" /* yacc.c:1646  */
-    {(yyval.typeName) = new TypeName((yyvsp[0].s));}
-#line 1854 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1859 "snowflake.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1858 "snowflake.tab.cpp" /* yacc.c:1646  */
+#line 1863 "snowflake.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2082,7 +2087,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 250 "snowflake.ypp" /* yacc.c:1906  */
+#line 267 "snowflake.ypp" /* yacc.c:1906  */
 
 
 void yyerror (char *s) {printf ("%s\n", s);}
