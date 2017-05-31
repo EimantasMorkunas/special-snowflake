@@ -43,12 +43,9 @@
     FunctionCall* call;
     CallParameters* callParams;
     CallParameter* callParam;
-<<<<<<< Updated upstream
 	Number* number;
-=======
     Array* array;
     ArrayInit* arrayInit;
->>>>>>> Stashed changes
 } 
 
 %start start
