@@ -1,0 +1,15 @@
+func fib(int it, int prev, int current) {
+	printf("%d\n", prev)
+	i = it - 1
+	next = current + prev
+	p = current
+	c = next
+	if i > 0 {
+		fib(i, p, c)
+	}
+}
+
+func main() {
+	result = 0
+	fib(10, 0, 1)
+}

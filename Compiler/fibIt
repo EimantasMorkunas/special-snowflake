@@ -3,9 +3,9 @@ func main() {
 	current = 1
 	temp = 0
 	loop i: 10 {
+		printf("%d\n", prev)
 		temp = current
 		current = current + prev
 		prev = temp
 	}
-	printf("%d\n", current)
 }

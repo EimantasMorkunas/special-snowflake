@@ -1,0 +1,4 @@
+#!/bin/sh
+cat fibIt | ./test > temp.cpp
+g++ -std=gnu++11 temp.cpp -o plswork
+rm temp.cpp
