@@ -8,6 +8,22 @@
 		"type_traits": "cpp",
 		"tuple": "cpp",
 		"utility": "cpp",
-		"iostream": "cpp"
+		"iostream": "cpp",
+		"*.tcc": "cpp",
+		"cctype": "cpp",
+		"clocale": "cpp",
+		"cstdint": "cpp",
+		"cstdio": "cpp",
+		"cstdlib": "cpp",
+		"cwchar": "cpp",
+		"cwctype": "cpp",
+		"exception": "cpp",
+		"iosfwd": "cpp",
+		"istream": "cpp",
+		"limits": "cpp",
+		"new": "cpp",
+		"stdexcept": "cpp",
+		"streambuf": "cpp",
+		"typeinfo": "cpp"
 	}
 }

@@ -43,7 +43,12 @@
     FunctionCall* call;
     CallParameters* callParams;
     CallParameter* callParam;
+<<<<<<< Updated upstream
 	Number* number;
+=======
+    Array* array;
+    ArrayInit* arrayInit;
+>>>>>>> Stashed changes
 } 
 
 %start start
@@ -106,6 +111,8 @@
 %type <callParam> funcCallParam
 %type <s> operator
 %type <number> number
+%type <array> array
+%type <arrayInit> arrayExp
 
 
 %left '+' '-'
@@ -114,116 +121,118 @@
 
 %%
 
-start           : code                                      {$$ = $1; CodeGenContext *c = new CodeGenContext(&paramsOfFunctions); cout << $$->genCode(c) << endl; delete c;}
+start           : code                                      {
+                                                                $$ = $1;
+                                                                CodeGenContext *c = new CodeGenContext(&paramsOfFunctions);
+                                                                cout << "#include <stdio.h>" << endl << $$->genCode(c) << endl; delete c;
+                                                            }
                 ;
 
-code            : func                                      {cout << "code" << endl; $$ = new Code(); $$->FunctionList.push_back($1);}
-                | code func                                 {printf("func code\n"); $1->FunctionList.push_back($2);}
+code            : func                                      {$$ = new Code(); $$->FunctionList.push_back($1);}
+                | code func                                 {$1->FunctionList.push_back($2);}
 
-statements      : statement                                 {printf("statement\n"); $$ = new Block(); $$->StatementList.push_back($1);}
-                | statements statement                      {printf("statement statements\n"); $1->StatementList.push_back($2);}
+statements      : statement                                 {$$ = new Block(); $$->StatementList.push_back($1);}
+                | statements statement                      {$1->StatementList.push_back($2);}
                 ;
                 
-block           : statements                                {printf("block statements\n"); $$ = $1;}
+block           : statements                                {$$ = $1;}
                 |                                           {$$ = new Block();}
                 ;
                 
-statement       : assignment                                {printf("assignment\n");}
-                | logical                                   {printf("logical\n");}
-                | loop                                      {printf("loop\n");}
-                | funcCall                                  {printf("funcCall in statement\n");}
+statement       : assignment                                {}
+                | logical                                   {}
+                | loop                                      {}
+                | funcCall                                  {}
                 ;
                 
-assignment      : VAR '=' exp                               {printf("simple assignment\n"); $$ = new AssignmentBasic($1, $3);}
-                | VAR '=' exp ',' assignment                {printf("multiple assignemnts\n");}
-                | VAR '[' varOrInteger ']' '=' exp          {printf("array element assignement\n");}
-                | VAR '=' array                             {printf("array assignement\n");}
+assignment      : VAR '=' exp                               {$$ = new AssignmentBasic($1, $3);}
+                | VAR '[' varOrInteger ']' '=' exp          {$$ = new AssignmentArrayElement($1, $3, $6);}
+                | VAR '=' array                             {$$ = new AssignmentArray($1, $3);}
                 ;
 
-array           : ARRAY_INIT arrayExp ']'                   {printf("array with special init\n");}
-                | '[' identifiers ']'                       {printf("array with standard init\n");}
+array           : ARRAY_INIT arrayExp ']'                   {$$ = new ArrayAlloc($2);}
+                | '[' identifiers ']'                       {$$ = new ArrayEnumed($2);}
                 ;
 
-arrayExp        : varOrInteger ',' identifier               {printf("array init exp w/ default\n");}
-                | varOrInteger                              {printf("array init exp\n");}
+arrayExp        : INTEGER ',' identifier                    {$$ = new ArrayPrefilled($1, $3);}
+                | INTEGER                                   {$$ = new ArrayEmpty($1);}
                 ;
 
-exp             : identifier                                {printf("exp with ident\n"); $$ = new ExpressionBasic($1);}
-                | identifier operator exp                   {printf("exp with op and exp\n"); $$ = new ExpressionOp($1, $2, $3);}
-                | identifier operator '(' exp ')'           {printf("exp with op and (exp)\n"); $$ = new ExpressionBrackets($1, $2, $4);}
+exp             : identifier                                {$$ = new ExpressionBasic($1);}
+                | identifier operator exp                   {$$ = new ExpressionOp($1, $2, $3);}
+                | identifier operator '(' exp ')'           {$$ = new ExpressionBrackets($1, $2, $4);}
                 ;
 
-operator        : PLUS                                      {printf("+\n");}
-                | MINUS                                     {printf("-\n");}
-                | MULT                                      {printf("*\n");}
-                | DIV                                       {printf("/\n");}
-                | MOD                                       {printf("%\n");}
+operator        : PLUS                                      {}
+                | MINUS                                     {}
+                | MULT                                      {}
+                | DIV                                       {}
+                | MOD                                       {}
                 ;
 
-logical         : IF eval '{' block '}' ELSE '{' block '}'  {printf("if with else\n"); $$ = new Logical(1, $2, $4, $8, nullptr);}
-                | IF eval '{' block '}' ELSE logical        {printf("if with else if\n"); $$ = new Logical(2, $2, $4, nullptr, $7);}
-                | IF eval '{' block '}'                     {printf("if no else\n"); $$ = new Logical(3, $2, $4, nullptr, nullptr);}
+logical         : IF eval '{' block '}' ELSE '{' block '}'  {$$ = new Logical(1, $2, $4, $8, nullptr);}
+                | IF eval '{' block '}' ELSE logical        {$$ = new Logical(2, $2, $4, nullptr, $7);}
+                | IF eval '{' block '}'                     {$$ = new Logical(3, $2, $4, nullptr, nullptr);}
                 ;
 
-loop            : LOOP VAR ':' range '{' block '}'          {printf("loop with range\n"); $$ = new LoopFor($2, $4, $6);}
-                | LOOP eval '{' block '}'                   {printf("loop with cond\n"); $$ = new LoopWhile($2, $4);}
+loop            : LOOP VAR ':' range '{' block '}'          {$$ = new LoopFor($2, $4, $6);}
+                | LOOP eval '{' block '}'                   {$$ = new LoopWhile($2, $4);}
                 ;
 
-range           : varOrInteger RNG varOrInteger             {printf("range from to\n"); $$ = new Range($1, $3);}
-                | varOrInteger                              {printf("range to\n"); $$ = new Range(nullptr, $1);}
+range           : varOrInteger RNG varOrInteger             {$$ = new Range($1, $3);}
+                | varOrInteger                              {$$ = new Range(nullptr, $1);}
                 ;
 
-eval            : bool logicalOperator eval                 {printf("joint eval\n"); $$ = new Evaluation($1, (*$2), $3);}
-                | bool                                      {printf("simple eval\n"); $$ = new Evaluation($1, "", nullptr);}
+eval            : bool logicalOperator eval                 {$$ = new Evaluation($1, (*$2), $3);}
+                | bool                                      {$$ = new Evaluation($1, "", nullptr);}
                 ;
 
-booleanExp      : evalGroup                                 {printf("evalGroupI in boolean exp\n"); $$ = new BooleanExp($1, "false");}
-                | BOOLEAN                                   {printf("BOOLEAN in bool exp\n"); $$ = new BooleanExp(nullptr, (*$1));}
+booleanExp      : evalGroup                                 {$$ = new BooleanExp($1, "false");}
+                | BOOLEAN                                   {$$ = new BooleanExp(nullptr, (*$1));}
                 ;
 
-logicalOperator : AND                                       {printf("and\n"); $$ = $1;}
-                | OR                                        {printf("or\n"); $$ = $1;}
+logicalOperator : AND                                       {$$ = $1;}
+                | OR                                        {$$ = $1;}
                 ;
 				
-identifiers     : identifier                                {printf("identifiers1\n"); $$ = new Identifiers(); $$->IdentifierList.push_back($1);}
-                | identifiers ',' identifier                {printf("identifiers2\n"); $1->IdentifierList.push_back($3);}
+identifiers     : identifier                                {$$ = new Identifiers(); $$->IdentifierList.push_back($1);}
+                | identifiers ',' identifier                {$1->IdentifierList.push_back($3);}
                 ;
 
-evalGroup       : identifiers comp evalGroupSub    			{printf("evalGroup\n"); $$ = new EvalGroup($1, (*$2), $3);}
+evalGroup       : identifiers comp evalGroupSub    			{$$ = new EvalGroup($1, (*$2), $3);}
                 ;
                 
-evalGroupSub    : identifiers comp evalGroupSub    			{printf("evalGroupSub1\n"); $$ = new EvalGroupSub($1, (*$2), $3);}
-                | identifiers                      			{printf("evalGroupSub2\n"); $$ = new EvalGroupSub($1, "", nullptr);}
+evalGroupSub    : identifiers comp evalGroupSub    			{$$ = new EvalGroupSub($1, (*$2), $3);}
+                | identifiers                      			{$$ = new EvalGroupSub($1, "", nullptr);}
                 ;
 
-comp            : LT                                       	{printf("lt\n"); $$ = $1;}
-                | GT                                       	{printf("gt\n"); $$ = $1;}
-                | LTE                                       {printf("lte\n"); $$ = $1;}
-                | GTE                                       {printf("gte\n"); $$ = $1;}
-                | EQ                                        {printf("eq\n"); $$ = $1;}
-                | NOT_EQ                                    {printf("noteq\n"); $$ = $1;}
+comp            : LT                                       	{$$ = $1;}
+                | GT                                       	{$$ = $1;}
+                | LTE                                       {$$ = $1;}
+                | GTE                                       {$$ = $1;}
+                | EQ                                        {$$ = $1;}
+                | NOT_EQ                                    {$$ = $1;}
                 ;
 
-number          : INTEGER                                   {printf("int in number\n"); $$ = new Integer(*$1); }
-                | FLOAT                                     {printf("float in number\n"); $$ = new Float(*$1);}
+number          : INTEGER                                   {$$ = new Integer(*$1); }
+                | FLOAT                                     {$$ = new Float(*$1);}
                 ;
 
-identifier      : VAR                                       {printf("var ident\n"); $$ = new Variable(*$1);}
-                | number                                    {printf("number ident\n"); }
-                | CHAR                                      {printf("char ident\n"); $$ = new Char(*$1);}
-                | STRING                                    {printf("string ident\n"); $$ = new String(*$1);}
+identifier      : VAR                                       {$$ = new Variable(*$1);}
+                | number                                    {}
+                | CHAR                                      {$$ = new Char(*$1);}
+                | STRING                                    {$$ = new String(*$1);}
                 ;
 
-varOrInteger    : VAR                                       {printf("funcCall\n"); $$ = new VarOrInteger($1, "");}
-                | INTEGER                                   {printf("funcCall\n"); $$ = new VarOrInteger(nullptr, *$1);}
+varOrInteger    : VAR                                       {$$ = new VarOrInteger($1, "");}
+                | INTEGER                                   {$$ = new VarOrInteger(nullptr, *$1);}
                 ;
 
-bool            : booleanExp                                {printf("funcCall\n"); $$ = new Bool($1, false);}
-                | NOT_INIT booleanExp ')'                   {printf("funcCall\n"); $$ = new Bool($2, true);}
+bool            : booleanExp                                {$$ = new Bool($1, false);}
+                | NOT_INIT booleanExp ')'                   {$$ = new Bool($2, true);}
                 ;
 
 func            : FUNC VAR '(' funcParams ')' '{' block '}' {
-                                                                printf("func\n");
                                                                 $$ = new Function($2, $4, $7);
                                                                 vector<ParamStruct*>* bs = new vector<ParamStruct*>();
                                                                 for(vector<Parameter*>::iterator it = $4->ParameterList.begin(); it != $4->ParameterList.end(); ++it)
@@ -234,31 +243,31 @@ func            : FUNC VAR '(' funcParams ')' '{' block '}' {
                                                             }
                 ;
                 
-funcParamsSub   : funcParam                                 {printf("funcParamsSub\n"); $$ = new Parameters(); $$->ParameterList.push_back($1);}
-                | funcParamsSub ',' funcParam               {printf("funcParamsSub multiple\n"); $1->ParameterList.push_back($3);}
+funcParamsSub   : funcParam                                 {$$ = new Parameters(); $$->ParameterList.push_back($1);}
+                | funcParamsSub ',' funcParam               {$1->ParameterList.push_back($3);}
                 ;
                 
-funcParams      : funcParamsSub                             {printf("funcParams\n"); $$ = $1;}
+funcParams      : funcParamsSub                             {$$ = $1;}
                 |                                           {$$ = new Parameters();}
                 ;
                 
-funcParam       : typeName VAR                              {printf("funcParam\n"); $$ = new Parameter($2, $1, false);}
-                | typeName OUT VAR                          {printf("funcParam Out\n"); $$ = new Parameter($3, $1, true);}
+funcParam       : typeName VAR                              {$$ = new Parameter($2, $1, false);}
+                | typeName OUT VAR                          {$$ = new Parameter($3, $1, true);}
                 ;
                 
-funcCall        : VAR '(' funcCallParams ')'                {printf("funcCall\n"); $$ = new FunctionCall($1, $3);}
+funcCall        : VAR '(' funcCallParams ')'                {$$ = new FunctionCall($1, $3);}
                 ;
                 
-funcCallParamsSub : funcCallParam                           {printf("funcCallParamsSub single\n"); $$ = new CallParameters(); $$->CallParameterList.push_back($1);}
-                  | funcCallParamsSub ',' funcCallParam     {printf("funcCallParamsSub mass\n"); $1->CallParameterList.push_back($3);}
+funcCallParamsSub : funcCallParam                           {$$ = new CallParameters(); $$->CallParameterList.push_back($1);}
+                  | funcCallParamsSub ',' funcCallParam     {$1->CallParameterList.push_back($3);}
                   ;
                     
-funcCallParams  : funcCallParamsSub                         {printf("funcCallParams\n"); $$ = $1;}
+funcCallParams  : funcCallParamsSub                         {$$ = $1;}
                 |                                           {$$ = new CallParameters();}
                 ;                 
 
-funcCallParam   : identifier                                {printf("call param ident\n"); $$ = new CallParameter($1, false);}
-                | OUT identifier                            {printf("call param out ident\n"); $$ = new CallParameter($2, true);}
+funcCallParam   : identifier                                {$$ = new CallParameter($1, false);}
+                | OUT identifier                            {$$ = new CallParameter($2, true);}
                 ;
 
 typeName        : INT_NAME                                  {$$ = new TypeName($1);}
