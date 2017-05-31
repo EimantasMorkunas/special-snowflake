@@ -1,8 +1,12 @@
 func main(int c) {
 	a = 5
-	b = a
+	b = 4
 	
 	loop i: 6..9 {
 		
+	}
+	
+	if !(a, 7, "stringas" > g, b < 'a', f) || a , d < b, e {
+	
 	}
 }

@@ -29,6 +29,15 @@
 	Loop* loop;
 	Range* range;
 	VarOrInteger* varOrInteger;
+	Logical* logical;
+	Evaluation* eval;
+	Bool* bb;
+	BooleanExp* booleanExp;
+	Identifiers* identifiers;
+	EvalGroup* evalGroup;
+	EvalGroupSub* evalGroupSub;
+	String* strVal;
+	Char* charVal;
 } 
 
 %start start
@@ -42,20 +51,22 @@
 %token <s> FLOAT
 %token <s> CHAR
 %token <s> STRING
-%token EQ
-%token NOT_EQ
-%token LTE
-%token GTE
-%token AND
-%token OR
 %token RNG
 %token NOT_INIT
-%token BOOLEAN
 %token ARRAY_INIT
 %token <s> INT_NAME
 %token <s> FLOAT_NAME
 %token <s> CHAR_NAME
 %token <s> STRING_NAME
+%token <s> AND
+%token <s> OR
+%token <s> BOOLEAN
+%token <s> LTE
+%token <s> GTE
+%token <s> EQ
+%token <s> NOT_EQ
+%token <s> LT
+%token <s> GT
 
 %type <block> block statements
 %type <statement> statement
@@ -70,6 +81,15 @@
 %type <loop> loop
 %type <range> range
 %type <varOrInteger> varOrInteger
+%type <logical> logical
+%type <eval> eval
+%type <bb> bool
+%type <booleanExp> booleanExp
+%type <s> logicalOperator
+%type <s> comp
+%type <identifiers> identifiers
+%type <evalGroup> evalGroup
+%type <evalGroupSub> evalGroupSub
 
 
 %left '+' '-'
@@ -125,9 +145,9 @@ operator        : '+'                                       {printf("+\n");}
                 | '%'                                       {printf("%\n");}
                 ;
 
-logical         : IF eval '{' block '}' ELSE '{' block '}'  {printf("if with else\n");}
-                | IF eval '{' block '}' ELSE logical        {printf("if with else if\n");}
-                | IF eval '{' block '}'                     {printf("if no else\n");}
+logical         : IF eval '{' block '}' ELSE '{' block '}'  {printf("if with else\n"); $$ = new Logical(1, $2, $4, $8, nullptr);}
+                | IF eval '{' block '}' ELSE logical        {printf("if with else if\n"); $$ = new Logical(2, $2, $4, nullptr, $7);}
+                | IF eval '{' block '}'                     {printf("if no else\n"); $$ = new Logical(3, $2, $4, nullptr, nullptr);}
                 ;
 
 loop            : LOOP VAR ':' range '{' block '}'          {printf("loop with range\n"); $$ = new LoopFor($2, $4, $6);}
@@ -138,56 +158,53 @@ range           : varOrInteger RNG varOrInteger             {printf("range from 
                 | varOrInteger                              {printf("range to\n"); $$ = new Range(nullptr, $1);}
                 ;
 
-eval            : bool logicalOperator eval                 {printf("joint eval\n");}
-                | bool                                      {printf("simple eval\n");}
+eval            : bool logicalOperator eval                 {printf("joint eval\n"); $$ = new Evaluation($1, (*$2), $3);}
+                | bool                                      {printf("simple eval\n"); $$ = new Evaluation($1, "", nullptr);}
                 ;
 
-booleanExp      : evalGroupI                                {printf("evalGroupI in boolean exp\n");}
-                | BOOLEAN                                   {printf("BOOLEAN in bool exp\n");}
+booleanExp      : evalGroup                                 {printf("evalGroupI in boolean exp\n"); $$ = new BooleanExp($1, "false");}
+                | BOOLEAN                                   {printf("BOOLEAN in bool exp\n"); $$ = new BooleanExp(nullptr, (*$1));}
                 ;
 
-evalGroupI      : evalGroup                                 {printf("funcCall\n");}
+logicalOperator : AND                                       {printf("and\n"); $$ = $1;}
+                | OR                                        {printf("or\n"); $$ = $1;}
+                ;
+				
+identifiers     : identifier                                {printf("identifiers1\n"); $$ = new Identifiers(); $$->IdentifierList.push_back($1);}
+                | identifiers ',' identifier                {printf("identifiers2\n"); $1->IdentifierList.push_back($3);}
                 ;
 
-logicalOperator : AND                                       {printf("funcCall\n");}
-                | OR                                        {printf("funcCall\n");}
-                ;
-
-identifiers     : identifier                                {printf("funcCall\n");}
-                | identifier ',' identifiers                {printf("funcCall\n");}
-                ;
-
-evalGroup       : identifiers comp evalGroupSub             {printf("funcCall\n");}
+evalGroup       : identifiers comp evalGroupSub    			{printf("evalGroup\n"); $$ = new EvalGroup($1, (*$2), $3);}
                 ;
                 
-evalGroupSub    : identifiers comp evalGroupSub             {printf("funcCall\n");}
-                | identifiers                               {printf("funcCall\n");}
+evalGroupSub    : identifiers comp evalGroupSub    			{printf("evalGroupSub1\n"); $$ = new EvalGroupSub($1, (*$2), $3);}
+                | identifiers                      			{printf("evalGroupSub2\n"); $$ = new EvalGroupSub($1, "", nullptr);}
                 ;
 
-comp            : '<'                                       {printf("funcCall\n");}
-                | '>'                                       {printf("funcCall\n");}
-                | LTE                                       {printf("funcCall\n");}
-                | GTE                                       {printf("funcCall\n");}
-                | EQ                                        {printf("funcCall\n");}
-                | NOT_EQ                                    {printf("funcCall\n");}
+comp            : LT                                       	{printf("lt\n"); $$ = $1;}
+                | GT                                       	{printf("gt\n"); $$ = $1;}
+                | LTE                                       {printf("lte\n"); $$ = $1;}
+                | GTE                                       {printf("gte\n"); $$ = $1;}
+                | EQ                                        {printf("eq\n"); $$ = $1;}
+                | NOT_EQ                                    {printf("noteq\n"); $$ = $1;}
                 ;
 
-number          : INTEGER                                   {printf("int in number\n");}
+number          : INTEGER                                   {printf("int in number\n"); }
                 | FLOAT                                     {printf("float in number\n");}
                 ;
 
-identifier      : VAR                                       {printf("var ident\n");}
-                | number                                    {printf("number ident\n");}
-                | CHAR                                      {printf("char ident\n");}
-                | STRING                                    {printf("string ident\n");}
+identifier      : VAR                                       {printf("var ident\n"); $$ = new Variable(*$1);}
+                | number                                    {printf("number ident\n"); }
+                | CHAR                                      {printf("char ident\n"); $$ = new Char(*$1);}
+                | STRING                                    {printf("string ident\n"); $$ = new String(*$1);}
                 ;
 
 varOrInteger    : VAR                                       {printf("funcCall\n"); $$ = new VarOrInteger($1, nullptr);}
                 | INTEGER                                   {printf("funcCall\n"); $$ = new VarOrInteger(nullptr, $1);}
                 ;
 
-bool            : booleanExp                                {printf("funcCall\n");}
-                | NOT_INIT booleanExp ')'                   {printf("funcCall\n");}
+bool            : booleanExp                                {printf("funcCall\n"); $$ = new Bool($1, false);}
+                | NOT_INIT booleanExp ')'                   {printf("funcCall\n"); $$ = new Bool($2, true);}
                 ;
 
 func            : FUNC VAR '(' funcParams ')' '{' block '}' {

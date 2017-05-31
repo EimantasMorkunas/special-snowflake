@@ -15,22 +15,24 @@ int						{yylval.s = new string(yytext);return INT_NAME;}
 float					{yylval.s = new string(yytext);return FLOAT_NAME;}
 char					{yylval.s = new string(yytext);return CHAR_NAME;}
 string					{yylval.s = new string(yytext);return STRING_NAME;}
-[<>=+\-*/^\]\[,{}():]   {return yytext[0];}
-!=                      {return NOT_EQ;}
-==                      {return EQ;}
-\<=                     {return LTE;}
->=                      {return GTE;}
-&&                      {return AND;}
-\|\|                    {return OR;}
+[=+\-*/^\]\[,{}():]     {return yytext[0];}
+\<						{yylval.s = new string(yytext);return LT;}
+>						{yylval.s = new string(yytext);return GT;}
+!=                      {yylval.s = new string(yytext);return NOT_EQ;}
+==                      {yylval.s = new string(yytext);return EQ;}
+\<=                     {yylval.s = new string(yytext);return LTE;}
+>=                      {yylval.s = new string(yytext);return GTE;}
+&&                      {yylval.s = new string(yytext);return AND;}
+\|\|                    {yylval.s = new string(yytext);return OR;}
 !\(                     {return NOT_INIT;}
 \.\[                    {return ARRAY_INIT;}
-(true)|(false)        	{return BOOLEAN;}
+(true)|(false)        	{yylval.s = new string(yytext);return BOOLEAN;}
 [a-zA-Z_][a-zA-Z0-9_]*  {yylval.variable = new Variable(yytext); return VAR;}
 -*[0-9]+                {yylval.integer = new Integer(yytext); return INTEGER;}
 -*[0-9]+.[0-9]+         {return FLOAT;}
 -*[0-9]+(.[0-9])*f      {return FLOAT;}
 \".*\"                  {yylval.s = new string(yytext); return STRING;}
-'.'                     {return CHAR;}
+'.'                     {yylval.s = new string(yytext); return CHAR;}
 \.\.                    {return RNG;}
 \/\/.*                  {}
 [ \t\n\r]               {}
