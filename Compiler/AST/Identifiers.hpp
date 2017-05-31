@@ -3,8 +3,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
-
-#include "Expression.hpp"
+#include "CodeGenContext.hpp"
 
 using namespace std;
 
@@ -17,5 +16,14 @@ public:
     }
     virtual ~Identifiers() {}
 
-    virtual string genCode() { return "Shit works, gg"; }
+    virtual string genCode(CodeGenContext* context) {
+        string result = "";
+        for(std::vector<Identifier*>::iterator it = IdentifierList.begin(); it != IdentifierList.end(); ++it) {
+			result += (*it)->genCode(context) + ",";
+		}
+        if (result != "") {
+			result = result.substr(0, result.size() - 1);
+		}
+        return result;
+     }
 };
