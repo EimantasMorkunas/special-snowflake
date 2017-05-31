@@ -14,5 +14,11 @@ func main(int c) {
 	
 	}
 	
+	a = "dasdas"
+	c = 's'
+	
+	a = 7
+	a = 7.5f
+	
 	
 }

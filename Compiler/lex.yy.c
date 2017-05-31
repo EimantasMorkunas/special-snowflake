@@ -944,17 +944,29 @@ YY_RULE_SETUP
 case 28:
 YY_RULE_SETUP
 #line 36 "snowflake.lpp"
+<<<<<<< Updated upstream
 {yylval.integer = new Integer(yytext); return INTEGER;}
+=======
+{yylval.s = new string(yytext);return INTEGER;}
+>>>>>>> Stashed changes
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 37 "snowflake.lpp"
+<<<<<<< Updated upstream
 {return FLOAT;}
+=======
+{yylval.s = new string(yytext);return FLOAT;}
+>>>>>>> Stashed changes
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 38 "snowflake.lpp"
+<<<<<<< Updated upstream
 {return FLOAT;}
+=======
+{yylval.s = new string(yytext);return FLOAT;}
+>>>>>>> Stashed changes
 	YY_BREAK
 case 31:
 YY_RULE_SETUP

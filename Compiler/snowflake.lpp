@@ -33,9 +33,9 @@ string					{yylval.s = new string(yytext);return STRING_NAME;}
 \.\[                    {return ARRAY_INIT;}
 (true)|(false)        	{yylval.s = new string(yytext);return BOOLEAN;}
 [a-zA-Z_][a-zA-Z0-9_]*  {yylval.variable = new Variable(yytext); return VAR;}
--*[0-9]+                {yylval.integer = new Integer(yytext); return INTEGER;}
--*[0-9]+.[0-9]+         {return FLOAT;}
--*[0-9]+(.[0-9])*f      {return FLOAT;}
+-*[0-9]+                {yylval.s = new string(yytext);return INTEGER;}
+-*[0-9]+.[0-9]+         {yylval.s = new string(yytext);return FLOAT;}
+-*[0-9]+(.[0-9])*f      {yylval.s = new string(yytext);return FLOAT;}
 \".*\"                  {yylval.s = new string(yytext); return STRING;}
 '.'                     {yylval.s = new string(yytext); return CHAR;}
 \.\.                    {return RNG;}
