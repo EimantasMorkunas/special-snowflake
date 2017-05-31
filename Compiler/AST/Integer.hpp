@@ -1,17 +1,20 @@
 #pragma once
+
 #include <iostream>
+
 #include "CodeGenContext.hpp"
 #include "Identifier.hpp"
+#include "Number.hpp"
 
 using namespace std;
 
-class Integer : public Identifier {
+class Integer : public Number {
 public:
-	int value;
-	Integer(char* value) {
-		this->value = atoi(value);
+	string value;
+	Integer(string value) {
+		this->value = value;
 	}
     virtual ~Integer() {}
-	virtual string getType() {return "INTEGER"; }
-    virtual string genCode(CodeGenContext* context) { return to_string(value); }
+	virtual string getType() { return "INTEGER"; }
+    virtual string genCode(CodeGenContext* context) { return value; }
 };

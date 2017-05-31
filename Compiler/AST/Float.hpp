@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class Float : public Identifier {
+class Float : public Number {
 public:
 	string value;
 	Float(string value) {

@@ -23,6 +23,7 @@
     Identifier* identifier;
     Variable* variable;
     Integer* integer;
+	Float* floatVal;
     Parameters* params;
     Parameter* param;
     TypeName* typeName;
@@ -42,6 +43,7 @@
     FunctionCall* call;
     CallParameters* callParams;
     CallParameter* callParam;
+	Number* number;
 } 
 
 %start start
@@ -51,7 +53,7 @@
 %token FUNC
 %token OUT
 %token <variable> VAR
-%token <integer> INTEGER
+%token <s> INTEGER
 %token <s> FLOAT
 %token <s> CHAR
 %token <s> STRING
@@ -103,6 +105,7 @@
 %type <callParams> funcCallParams funcCallParamsSub
 %type <callParam> funcCallParam
 %type <s> operator
+%type <number> number
 
 
 %left '+' '-'
@@ -201,8 +204,8 @@ comp            : LT                                       	{printf("lt\n"); $$ 
                 | NOT_EQ                                    {printf("noteq\n"); $$ = $1;}
                 ;
 
-number          : INTEGER                                   {printf("int in number\n"); }
-                | FLOAT                                     {printf("float in number\n");}
+number          : INTEGER                                   {printf("int in number\n"); $$ = new Integer(*$1); }
+                | FLOAT                                     {printf("float in number\n"); $$ = new Float(*$1);}
                 ;
 
 identifier      : VAR                                       {printf("var ident\n"); $$ = new Variable(*$1);}
@@ -211,8 +214,8 @@ identifier      : VAR                                       {printf("var ident\n
                 | STRING                                    {printf("string ident\n"); $$ = new String(*$1);}
                 ;
 
-varOrInteger    : VAR                                       {printf("funcCall\n"); $$ = new VarOrInteger($1, nullptr);}
-                | INTEGER                                   {printf("funcCall\n"); $$ = new VarOrInteger(nullptr, $1);}
+varOrInteger    : VAR                                       {printf("funcCall\n"); $$ = new VarOrInteger($1, "");}
+                | INTEGER                                   {printf("funcCall\n"); $$ = new VarOrInteger(nullptr, *$1);}
                 ;
 
 bool            : booleanExp                                {printf("funcCall\n"); $$ = new Bool($1, false);}

@@ -60,6 +60,7 @@ extern int yydebug;
     MULT = 270,
     DIV = 271,
     MOD = 272,
+<<<<<<< Updated upstream
     EQ = 273,
     NOT_EQ = 274,
     LTE = 275,
@@ -74,6 +75,22 @@ extern int yydebug;
     CHAR_NAME = 284,
     STRING_NAME = 285,
     BOOLEAN = 286,
+=======
+    RNG = 273,
+    NOT_INIT = 274,
+    ARRAY_INIT = 275,
+    INT_NAME = 276,
+    FLOAT_NAME = 277,
+    CHAR_NAME = 278,
+    STRING_NAME = 279,
+    AND = 280,
+    OR = 281,
+    BOOLEAN = 282,
+    LTE = 283,
+    GTE = 284,
+    EQ = 285,
+    NOT_EQ = 286,
+>>>>>>> Stashed changes
     LT = 287,
     GT = 288
   };
@@ -97,6 +114,7 @@ union YYSTYPE
     Identifier* identifier;
     Variable* variable;
     Integer* integer;
+	Float* floatVal;
     Parameters* params;
     Parameter* param;
     TypeName* typeName;
@@ -116,8 +134,13 @@ union YYSTYPE
     FunctionCall* call;
     CallParameters* callParams;
     CallParameter* callParam;
+	Number* number;
 
+<<<<<<< Updated upstream
 #line 121 "snowflake.tab.hpp" /* yacc.c:1909  */
+=======
+#line 123 "snowflake.tab.hpp" /* yacc.c:1909  */
+>>>>>>> Stashed changes
 };
 
 typedef union YYSTYPE YYSTYPE;

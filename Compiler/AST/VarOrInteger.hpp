@@ -7,16 +7,16 @@ using namespace std;
 class VarOrInteger {
 public:
     Variable* variable;
-    Integer* integer; 
+    string integer; 
     
-    VarOrInteger(Variable* variable, Integer* integer) {
+    VarOrInteger(Variable* variable, string integer) {
         this->variable = variable;
         this->integer = integer;
     }
-    virtual ~VarOrInteger() { delete variable; delete integer; }
+    virtual ~VarOrInteger() { delete variable; }
 
     virtual string genCode(CodeGenContext* context) {
-        return variable == nullptr ? integer->genCode(context) :
+        return variable == nullptr ? integer :
             variable->genCode(context);
     }
 };
