@@ -1,5 +1,13 @@
 {
 	"files.associations": {
-		"ostream": "cpp"
+		"ostream": "cpp",
+		"map": "cpp",
+		"array": "cpp",
+		"initializer_list": "cpp",
+		"system_error": "cpp",
+		"type_traits": "cpp",
+		"tuple": "cpp",
+		"utility": "cpp",
+		"iostream": "cpp"
 	}
 }

@@ -15,7 +15,6 @@ int						{yylval.s = new string(yytext);return INT_NAME;}
 float					{yylval.s = new string(yytext);return FLOAT_NAME;}
 char					{yylval.s = new string(yytext);return CHAR_NAME;}
 string					{yylval.s = new string(yytext);return STRING_NAME;}
-[=+\-*/^\]\[,{}():]     {return yytext[0];}
 \<						{yylval.s = new string(yytext);return LT;}
 >						{yylval.s = new string(yytext);return GT;}
 !=                      {yylval.s = new string(yytext);return NOT_EQ;}
@@ -24,6 +23,12 @@ string					{yylval.s = new string(yytext);return STRING_NAME;}
 >=                      {yylval.s = new string(yytext);return GTE;}
 &&                      {yylval.s = new string(yytext);return AND;}
 \|\|                    {yylval.s = new string(yytext);return OR;}
+[=\]\[,{}():]   		{return yytext[0];}
+[+]						{yylval.s = new string(yytext);return PLUS;}
+[\-]					{yylval.s = new string(yytext);return MINUS;}
+[*]						{yylval.s = new string(yytext);return MULT;}
+[/]						{yylval.s = new string(yytext);return DIV;}
+%						{yylval.s = new string(yytext);return MOD;}
 !\(                     {return NOT_INIT;}
 \.\[                    {return ARRAY_INIT;}
 (true)|(false)        	{yylval.s = new string(yytext);return BOOLEAN;}

@@ -7,9 +7,9 @@ using namespace std;
 
 class CallParameter : public Node {
 public:
-	Variable* name;
+	Identifier* name;
 	bool isOut;
-	CallParameter(Variable* name, bool isOut) {
+	CallParameter(Identifier* name, bool isOut) {
 		this->name = name;
 		this->isOut = isOut;
 	}

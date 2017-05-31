@@ -55,20 +55,25 @@ extern int yydebug;
     FLOAT = 265,
     CHAR = 266,
     STRING = 267,
-    EQ = 268,
-    NOT_EQ = 269,
-    LTE = 270,
-    GTE = 271,
-    AND = 272,
-    OR = 273,
-    RNG = 274,
-    NOT_INIT = 275,
-    BOOLEAN = 276,
-    ARRAY_INIT = 277,
-    INT_NAME = 278,
-    FLOAT_NAME = 279,
-    CHAR_NAME = 280,
-    STRING_NAME = 281
+    PLUS = 268,
+    MINUS = 269,
+    MULT = 270,
+    DIV = 271,
+    MOD = 272,
+    EQ = 273,
+    NOT_EQ = 274,
+    LTE = 275,
+    GTE = 276,
+    AND = 277,
+    OR = 278,
+    RNG = 279,
+    NOT_INIT = 280,
+    BOOLEAN = 281,
+    ARRAY_INIT = 282,
+    INT_NAME = 283,
+    FLOAT_NAME = 284,
+    CHAR_NAME = 285,
+    STRING_NAME = 286
   };
 #endif
 
@@ -77,7 +82,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 11 "snowflake.ypp" /* yacc.c:1909  */
+#line 14 "snowflake.ypp" /* yacc.c:1909  */
  
     Node* node;
     Code* code;
@@ -97,8 +102,11 @@ union YYSTYPE
 	Loop* loop;
 	Range* range;
 	VarOrInteger* varOrInteger;
+    FunctionCall* call;
+    CallParameters* callParams;
+    CallParameter* callParam;
 
-#line 102 "snowflake.tab.hpp" /* yacc.c:1909  */
+#line 110 "snowflake.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

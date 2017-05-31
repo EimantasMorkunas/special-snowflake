@@ -8,24 +8,30 @@ class FunctionCall : public Statement {
 public:
 	Variable* name;
 	CallParameters* params;
+	FunctionCall(Variable* name, CallParameters* params) {
+		this->name = name;
+		this->params = params;
+	}
     virtual ~FunctionCall() {}
     virtual string genCode(CodeGenContext* context) {
 		string result = "";
-		
+		int i = 0;
 		for(std::vector<CallParameter*>::iterator it = params->CallParameterList.begin(); it != params->CallParameterList.end(); ++it) {
 			if ((*it)->isOut) {
-				string type = context->paramsOfFunctions->at(name->name).type;
-				string default;
+				vector<ParamStruct*> pS = *context->paramsOfFunctions->at(name->name);
+				string type = *(pS[i]->type);
+				string value;
 				if (type == "string") {
-					default = "\"\"":
+					value = "\"\"";
 				} else if (type == "char") {
-					default = "\'\'";
+					value = "\'\'";
 				} else {
-					default = "0";
+					value = "0";
 				}
-				result += type + " " + (*it)->name->name + " = " + " " + default + ";";
+				result += type + " " + (*it)->name->genCode(context) + " = " + " " + value + ";";
 			}
+			i++;
 		}
-		return result + name->name + "(" + params->codeGen() + ")";
+		return result + name->name + "(" + params->genCode(context) + ")";
 	}
 };
