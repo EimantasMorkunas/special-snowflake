@@ -123,6 +123,7 @@ start           : code                                      {
                                                                 CodeGenContext *c = new CodeGenContext(&paramsOfFunctions);
                                                                 cout << "#include <stdio.h>" << endl
                                                                     << "#include <iomanip>" << endl
+                                                                    << "#include <fcntl.h>" << endl
                                                                     << "using namespace std;" << endl
                                                                     << $$->genCode(c) << endl; delete c;
                                                             }
